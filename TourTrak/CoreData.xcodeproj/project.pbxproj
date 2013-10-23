@@ -1,0 +1,482 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8532144F18188DD9003D5274 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8532144E18188DD9003D5274 /* Foundation.framework */; };
+		8532145118188DD9003D5274 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8532145018188DD9003D5274 /* CoreGraphics.framework */; };
+		8532145318188DD9003D5274 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8532145218188DD9003D5274 /* UIKit.framework */; };
+		8532145518188DD9003D5274 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8532145418188DD9003D5274 /* CoreData.framework */; };
+		8532145B18188DD9003D5274 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8532145918188DD9003D5274 /* InfoPlist.strings */; };
+		8532145D18188DD9003D5274 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8532145C18188DD9003D5274 /* main.m */; };
+		8532146118188DD9003D5274 /* TTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8532146018188DD9003D5274 /* TTAppDelegate.m */; };
+		8532146418188DD9003D5274 /* TourTrak.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8532146218188DD9003D5274 /* TourTrak.xcdatamodeld */; };
+		8532146618188DD9003D5274 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8532146518188DD9003D5274 /* Images.xcassets */; };
+		8532146D18188DD9003D5274 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8532146C18188DD9003D5274 /* XCTest.framework */; };
+		8532146E18188DD9003D5274 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8532144E18188DD9003D5274 /* Foundation.framework */; };
+		8532146F18188DD9003D5274 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8532145218188DD9003D5274 /* UIKit.framework */; };
+		8532147018188DD9003D5274 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8532145418188DD9003D5274 /* CoreData.framework */; };
+		8532147818188DD9003D5274 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8532147618188DD9003D5274 /* InfoPlist.strings */; };
+		8532147A18188DD9003D5274 /* TourTrakTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8532147918188DD9003D5274 /* TourTrakTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8532147118188DD9003D5274 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8532144318188DD8003D5274 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8532144A18188DD8003D5274;
+			remoteInfo = TourTrak;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8532144B18188DD9003D5274 /* TourTrak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TourTrak.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8532144E18188DD9003D5274 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8532145018188DD9003D5274 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8532145218188DD9003D5274 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		8532145418188DD9003D5274 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		8532145818188DD9003D5274 /* TourTrak-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TourTrak-Info.plist"; sourceTree = "<group>"; };
+		8532145A18188DD9003D5274 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8532145C18188DD9003D5274 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8532145E18188DD9003D5274 /* TourTrak-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TourTrak-Prefix.pch"; sourceTree = "<group>"; };
+		8532145F18188DD9003D5274 /* TTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTAppDelegate.h; sourceTree = "<group>"; };
+		8532146018188DD9003D5274 /* TTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTAppDelegate.m; sourceTree = "<group>"; };
+		8532146318188DD9003D5274 /* TourTrak.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TourTrak.xcdatamodel; sourceTree = "<group>"; };
+		8532146518188DD9003D5274 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		8532146B18188DD9003D5274 /* TourTrakTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TourTrakTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8532146C18188DD9003D5274 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		8532147518188DD9003D5274 /* TourTrakTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TourTrakTests-Info.plist"; sourceTree = "<group>"; };
+		8532147718188DD9003D5274 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8532147918188DD9003D5274 /* TourTrakTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TourTrakTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8532144818188DD8003D5274 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8532145118188DD9003D5274 /* CoreGraphics.framework in Frameworks */,
+				8532145518188DD9003D5274 /* CoreData.framework in Frameworks */,
+				8532145318188DD9003D5274 /* UIKit.framework in Frameworks */,
+				8532144F18188DD9003D5274 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8532146818188DD9003D5274 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8532146D18188DD9003D5274 /* XCTest.framework in Frameworks */,
+				8532147018188DD9003D5274 /* CoreData.framework in Frameworks */,
+				8532146F18188DD9003D5274 /* UIKit.framework in Frameworks */,
+				8532146E18188DD9003D5274 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8532144218188DD8003D5274 = {
+			isa = PBXGroup;
+			children = (
+				8532145618188DD9003D5274 /* TourTrak */,
+				8532147318188DD9003D5274 /* TourTrakTests */,
+				8532144D18188DD9003D5274 /* Frameworks */,
+				8532144C18188DD9003D5274 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8532144C18188DD9003D5274 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8532144B18188DD9003D5274 /* TourTrak.app */,
+				8532146B18188DD9003D5274 /* TourTrakTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8532144D18188DD9003D5274 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8532144E18188DD9003D5274 /* Foundation.framework */,
+				8532145018188DD9003D5274 /* CoreGraphics.framework */,
+				8532145218188DD9003D5274 /* UIKit.framework */,
+				8532145418188DD9003D5274 /* CoreData.framework */,
+				8532146C18188DD9003D5274 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8532145618188DD9003D5274 /* TourTrak */ = {
+			isa = PBXGroup;
+			children = (
+				8532145F18188DD9003D5274 /* TTAppDelegate.h */,
+				8532146018188DD9003D5274 /* TTAppDelegate.m */,
+				8532146518188DD9003D5274 /* Images.xcassets */,
+				8532146218188DD9003D5274 /* TourTrak.xcdatamodeld */,
+				8532145718188DD9003D5274 /* Supporting Files */,
+			);
+			path = TourTrak;
+			sourceTree = "<group>";
+		};
+		8532145718188DD9003D5274 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8532145818188DD9003D5274 /* TourTrak-Info.plist */,
+				8532145918188DD9003D5274 /* InfoPlist.strings */,
+				8532145C18188DD9003D5274 /* main.m */,
+				8532145E18188DD9003D5274 /* TourTrak-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8532147318188DD9003D5274 /* TourTrakTests */ = {
+			isa = PBXGroup;
+			children = (
+				8532147918188DD9003D5274 /* TourTrakTests.m */,
+				8532147418188DD9003D5274 /* Supporting Files */,
+			);
+			path = TourTrakTests;
+			sourceTree = "<group>";
+		};
+		8532147418188DD9003D5274 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				8532147518188DD9003D5274 /* TourTrakTests-Info.plist */,
+				8532147618188DD9003D5274 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8532144A18188DD8003D5274 /* TourTrak */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8532147D18188DD9003D5274 /* Build configuration list for PBXNativeTarget "TourTrak" */;
+			buildPhases = (
+				8532144718188DD8003D5274 /* Sources */,
+				8532144818188DD8003D5274 /* Frameworks */,
+				8532144918188DD8003D5274 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TourTrak;
+			productName = TourTrak;
+			productReference = 8532144B18188DD9003D5274 /* TourTrak.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8532146A18188DD9003D5274 /* TourTrakTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8532148018188DD9003D5274 /* Build configuration list for PBXNativeTarget "TourTrakTests" */;
+			buildPhases = (
+				8532146718188DD9003D5274 /* Sources */,
+				8532146818188DD9003D5274 /* Frameworks */,
+				8532146918188DD9003D5274 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8532147218188DD9003D5274 /* PBXTargetDependency */,
+			);
+			name = TourTrakTests;
+			productName = TourTrakTests;
+			productReference = 8532146B18188DD9003D5274 /* TourTrakTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8532144318188DD8003D5274 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TT;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = devcycle;
+				TargetAttributes = {
+					8532146A18188DD9003D5274 = {
+						TestTargetID = 8532144A18188DD8003D5274;
+					};
+				};
+			};
+			buildConfigurationList = 8532144618188DD8003D5274 /* Build configuration list for PBXProject "TourTrak" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8532144218188DD8003D5274;
+			productRefGroup = 8532144C18188DD9003D5274 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8532144A18188DD8003D5274 /* TourTrak */,
+				8532146A18188DD9003D5274 /* TourTrakTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8532144918188DD8003D5274 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8532145B18188DD9003D5274 /* InfoPlist.strings in Resources */,
+				8532146618188DD9003D5274 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8532146918188DD9003D5274 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8532147818188DD9003D5274 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8532144718188DD8003D5274 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8532146118188DD9003D5274 /* TTAppDelegate.m in Sources */,
+				8532145D18188DD9003D5274 /* main.m in Sources */,
+				8532146418188DD9003D5274 /* TourTrak.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8532146718188DD9003D5274 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8532147A18188DD9003D5274 /* TourTrakTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8532147218188DD9003D5274 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8532144A18188DD8003D5274 /* TourTrak */;
+			targetProxy = 8532147118188DD9003D5274 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		8532145918188DD9003D5274 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8532145A18188DD9003D5274 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		8532147618188DD9003D5274 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8532147718188DD9003D5274 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8532147B18188DD9003D5274 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8532147C18188DD9003D5274 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8532147E18188DD9003D5274 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TourTrak/TourTrak-Prefix.pch";
+				INFOPLIST_FILE = "TourTrak/TourTrak-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		8532147F18188DD9003D5274 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TourTrak/TourTrak-Prefix.pch";
+				INFOPLIST_FILE = "TourTrak/TourTrak-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		8532148118188DD9003D5274 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TourTrak.app/TourTrak";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TourTrak/TourTrak-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "TourTrakTests/TourTrakTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		8532148218188DD9003D5274 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TourTrak.app/TourTrak";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TourTrak/TourTrak-Prefix.pch";
+				INFOPLIST_FILE = "TourTrakTests/TourTrakTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8532144618188DD8003D5274 /* Build configuration list for PBXProject "TourTrak" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8532147B18188DD9003D5274 /* Debug */,
+				8532147C18188DD9003D5274 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8532147D18188DD9003D5274 /* Build configuration list for PBXNativeTarget "TourTrak" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8532147E18188DD9003D5274 /* Debug */,
+				8532147F18188DD9003D5274 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		8532148018188DD9003D5274 /* Build configuration list for PBXNativeTarget "TourTrakTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8532148118188DD9003D5274 /* Debug */,
+				8532148218188DD9003D5274 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8532146218188DD9003D5274 /* TourTrak.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8532146318188DD9003D5274 /* TourTrak.xcdatamodel */,
+			);
+			currentVersion = 8532146318188DD9003D5274 /* TourTrak.xcdatamodel */;
+			path = TourTrak.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 8532144318188DD8003D5274 /* Project object */;
+}
