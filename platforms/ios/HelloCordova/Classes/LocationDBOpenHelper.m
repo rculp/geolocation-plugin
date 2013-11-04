@@ -141,6 +141,55 @@
     return results;
 }
 
+/**
+ * 
+ * Insert a Location Controller in the table
+ *
+ *
+ * @return - id entry
+ **/
+-(NSNumber *)insertLocation:(LocationController *) loc{
+    loc.delegate = self;<#(NSDateFormatterStyle)#>
+    NSString *dateStr = [NSDateFormatter
+                         localizedStringFromDate:location.time
+                                                       dateStyle:NSDateFormatterShortStyle
+                                                       timeStyle:NSDateFormatterFullStyle];
+    
+    NSManagedObject *location = [NSEntityDescription
+                                 insertNewObjectForEntityForName:@"locationUpdates"
+                                 inManagedObjectContext:managedObjectContext];
+    
+    float batteryLevel = [[UIDevice currentDevice] batteryLevel]
+    
+    [location setValue:dateStr forKey@:"time"];
+    
+    [location setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude]
+     forKey@:"latitude"];
+    
+    [location setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude]
+     forKey@:"longitude"];
+    
+    [location setValue:[NSString stringWithFormat:@"%f",[location horizontalAccuracy]]
+     forKey@:"accuracy"];
+    
+    [location setValue:[NSString stringWithFormat:@"%f",[location speed]]
+     forKey@:"speed"];
+    
+    [location setValue:[NSString stringWithFormat:@"%f",[location course]]
+     forKey@:"bearing"];
+    
+    [location setValue:@"" forKey@:"provider"];
+    
+    [location setValue:[NSString stringWithFormat:@"%f",batteryLevel]
+     forKey@:"battery"];
+    
+    NSError *error;
+    if(![managedObjectContext save:&error]){
+        NSLog(@"Failed to save - error: %@", [error localizedDescription)]);
+    }
+    
+}
+
 
 
 
