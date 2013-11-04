@@ -7,8 +7,7 @@
 //
 
 #import <Cordova/CDV.h>
-#import "LocationController.h"
-
+#import <CoreLocation/CoreLocation.h>
 
 @interface LocationDBOpenHelper : CDVPlugin {
     NSManagedObjectContext *managedObjectContext;
@@ -28,7 +27,7 @@
 - (NSArray*) getAllLocations;
 - (NSArray*) getLocations : (NSNumber *) size;
 - (void) clearLocations;
-- (NSNumber *) insertLocation : (LocationController *) loc; //for now take no paramter
+- (NSNumber *) insertLocation : (CLLocation *) location; //for now take no paramter
 
     
 

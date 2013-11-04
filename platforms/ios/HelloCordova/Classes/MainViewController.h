@@ -28,6 +28,7 @@
 #import <Cordova/CDVViewController.h>
 #import <Cordova/CDVCommandDelegateImpl.h>
 #import <Cordova/CDVCommandQueue.h>
+#import "LocationDBOpenHelper.h"
 
 @interface MainViewController : CDVViewController
 

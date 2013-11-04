@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloCordova/Classes/LocationDBOpenHelper.h"
-            timestampString = "405281995.866617"
+            timestampString = "405286412.657935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
             landmarkName = "-insertLocation:"
             landmarkType = "4">
          </BreakpointContent>

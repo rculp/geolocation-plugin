@@ -34,9 +34,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Uncomment to override the CDVCommandDelegateImpl used
-        // _commandDelegate = [[MainCommandDelegate alloc] initWithViewController:self];
+         _commandDelegate = [[MainCommandDelegate alloc] initWithViewController:self];
         // Uncomment to override the CDVCommandQueue used
-        // _commandQueue = [[MainCommandQueue alloc] initWithViewController:self];
+         _commandQueue = [[MainCommandQueue alloc] initWithViewController:self];
     }
     return self;
 }
@@ -46,9 +46,9 @@
     self = [super init];
     if (self) {
         // Uncomment to override the CDVCommandDelegateImpl used
-        // _commandDelegate = [[MainCommandDelegate alloc] initWithViewController:self];
+         _commandDelegate = [[MainCommandDelegate alloc] initWithViewController:self];
         // Uncomment to override the CDVCommandQueue used
-        // _commandQueue = [[MainCommandQueue alloc] initWithViewController:self];
+         _commandQueue = [[MainCommandQueue alloc] initWithViewController:self];
     }
     return self;
 }
@@ -74,8 +74,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CLController = [[LocationController alloc] init];
+    CLController.delegate = self;
+    [CLController.locMgr startUpdatingLocation];
+    
+    
     // Do any additional setup after loading the view from its nib.
 }
+
+- (void)locationUpdate : (CLLocation *)location
+{
+    dbOpenHelper = [[LocationDBOpenHelper alloc]init];
+    dbOpenHelper.insertLocation(location);
+
+}
+
 
 - (void)viewDidUnload
 {

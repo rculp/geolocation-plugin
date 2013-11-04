@@ -8,6 +8,7 @@
 
 #import "LocationDBOpenHelper.h"
 #import "LocationUpdates.h"
+#import "LocationController.h"
 
 @implementation LocationDBOpenHelper
 @synthesize managedObjectContext;
@@ -148,14 +149,14 @@
  *
  * @return - id entry
  **/
--(NSNumber *)insertLocation:(LocationController *) loc{
+-(NSNumber *)insertLocation:(CLLocation *) location{
     loc.delegate = self;<#(NSDateFormatterStyle)#>
     NSString *dateStr = [NSDateFormatter
                          localizedStringFromDate:location.time
                                                        dateStyle:NSDateFormatterShortStyle
                                                        timeStyle:NSDateFormatterFullStyle];
     
-    NSManagedObject *location = [NSEntityDescription
+    NSManagedObject *row = [NSEntityDescription
                                  insertNewObjectForEntityForName:@"locationUpdates"
                                  inManagedObjectContext:managedObjectContext];
     
@@ -178,7 +179,7 @@
     [location setValue:[NSString stringWithFormat:@"%f",[location course]]
      forKey@:"bearing"];
     
-    [location setValue:@"" forKey@:"provider"];
+    [location setValue:@"TEST" forKey@:"provider"];
     
     [location setValue:[NSString stringWithFormat:@"%f",batteryLevel]
      forKey@:"battery"];
@@ -187,6 +188,7 @@
     if(![managedObjectContext save:&error]){
         NSLog(@"Failed to save - error: %@", [error localizedDescription)]);
     }
+    
     
 }
 
