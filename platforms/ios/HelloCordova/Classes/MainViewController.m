@@ -74,19 +74,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    CLController = [[LocationController alloc] init];
-    CLController.delegate = self;
-    [CLController.locMgr startUpdatingLocation];
-    
     
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)locationUpdate : (CLLocation *)location
 {
-    dbOpenHelper = [[LocationDBOpenHelper alloc]init];
-    dbOpenHelper.insertLocation(location);
-
+    
 }
 
 

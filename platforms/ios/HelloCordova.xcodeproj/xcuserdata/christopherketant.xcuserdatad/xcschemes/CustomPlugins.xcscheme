@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "85067A741827A74600EBB0DB"
-            BuildableName = "CustomPlugins.app"
-            BlueprintName = "CustomPlugins"
+            BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
+            BuildableName = "HelloCordova.app"
+            BlueprintName = "HelloCordova"
             ReferencedContainer = "container:HelloCordova.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,9 +51,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "85067A741827A74600EBB0DB"
-            BuildableName = "CustomPlugins.app"
-            BlueprintName = "CustomPlugins"
+            BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
+            BuildableName = "HelloCordova.app"
+            BlueprintName = "HelloCordova"
             ReferencedContainer = "container:HelloCordova.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

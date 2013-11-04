@@ -150,9 +150,9 @@
  * @return - id entry
  **/
 -(NSNumber *)insertLocation:(CLLocation *) location{
-    loc.delegate = self;<#(NSDateFormatterStyle)#>
+    
     NSString *dateStr = [NSDateFormatter
-                         localizedStringFromDate:location.time
+                         localizedStringFromDate:location.timestamp
                                                        dateStyle:NSDateFormatterShortStyle
                                                        timeStyle:NSDateFormatterFullStyle];
     
@@ -160,41 +160,35 @@
                                  insertNewObjectForEntityForName:@"locationUpdates"
                                  inManagedObjectContext:managedObjectContext];
     
-    float batteryLevel = [[UIDevice currentDevice] batteryLevel]
+    float batteryLevel = [[UIDevice currentDevice] batteryLevel];
     
-    [location setValue:dateStr forKey@:"time"];
+    [location setValue:dateStr forKey:@"time"];
     
     [location setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude]
-     forKey@:"latitude"];
+                forKey:@"latitude"];
     
     [location setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude]
-     forKey@:"longitude"];
+                forKey:@"longitude"];
     
     [location setValue:[NSString stringWithFormat:@"%f",[location horizontalAccuracy]]
-     forKey@:"accuracy"];
+                forKey:@"accuracy"];
     
     [location setValue:[NSString stringWithFormat:@"%f",[location speed]]
-     forKey@:"speed"];
+                forKey:@"speed"];
     
     [location setValue:[NSString stringWithFormat:@"%f",[location course]]
-     forKey@:"bearing"];
+                forKey:@"bearing"];
     
-    [location setValue:@"TEST" forKey@:"provider"];
+    [location setValue:@"TEST" forKey:@"provider"];
     
     [location setValue:[NSString stringWithFormat:@"%f",batteryLevel]
-     forKey@:"battery"];
+                forKey:@"battery"];
     
     NSError *error;
     if(![managedObjectContext save:&error]){
-        NSLog(@"Failed to save - error: %@", [error localizedDescription)]);
+        NSLog(@"Failed to save - error: %@", [error localizedDescription]);
     }
     
     
 }
-
-
-
-
-
-
 @end
