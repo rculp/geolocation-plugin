@@ -79,7 +79,7 @@
  *
  *
  **/
-- (NSArray*) clearLocations{
+- (void) clearLocations{
     //Prepare our fetch request
     NSFetchRequest *allLocations = [[NSFetchRequest alloc] initWithEntityName:@"LocationUpdates"];
 
@@ -125,7 +125,7 @@
  *
  * @return - results array
  **/
-- (NSArray*)getLocations:(NSInteger *) size {
+- (NSArray*)getLocations:(NSNumber *) size {
     
     //Set up our fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"LocationUpdates"];
@@ -149,7 +149,7 @@
  *
  * @return - id entry
  **/
--(NSNumber *)insertLocation:(CLLocation *) location{
+-(void)insertLocation:(CLLocation *) location{
     
     NSString *dateStr = [NSDateFormatter
                          localizedStringFromDate:location.timestamp
@@ -162,33 +162,32 @@
     
     float batteryLevel = [[UIDevice currentDevice] batteryLevel];
     
-    [location setValue:dateStr forKey:@"time"];
+    [row setValue:dateStr forKey:@"time"];
     
-    [location setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude]
+    [row setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude]
                 forKey:@"latitude"];
     
-    [location setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude]
+    [row setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude]
                 forKey:@"longitude"];
     
-    [location setValue:[NSString stringWithFormat:@"%f",[location horizontalAccuracy]]
+    [row setValue:[NSString stringWithFormat:@"%f",[location horizontalAccuracy]]
                 forKey:@"accuracy"];
     
-    [location setValue:[NSString stringWithFormat:@"%f",[location speed]]
+    [row setValue:[NSString stringWithFormat:@"%f",[location speed]]
                 forKey:@"speed"];
     
-    [location setValue:[NSString stringWithFormat:@"%f",[location course]]
+    [row setValue:[NSString stringWithFormat:@"%f",[location course]]
                 forKey:@"bearing"];
     
-    [location setValue:@"TEST" forKey:@"provider"];
+    [row setValue:@"TEST" forKey:@"provider"];
     
-    [location setValue:[NSString stringWithFormat:@"%f",batteryLevel]
+    [row setValue:[NSString stringWithFormat:@"%f",batteryLevel]
                 forKey:@"battery"];
     
     NSError *error;
     if(![managedObjectContext save:&error]){
         NSLog(@"Failed to save - error: %@", [error localizedDescription]);
     }
-    
     
 }
 @end

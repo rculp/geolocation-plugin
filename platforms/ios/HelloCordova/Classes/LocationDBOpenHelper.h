@@ -27,7 +27,7 @@
 - (NSArray*) getAllLocations;
 - (NSArray*) getLocations : (NSNumber *) size;
 - (void) clearLocations;
-- (NSNumber *) insertLocation : (CLLocation *) location; //for now take no paramter
+- (void) insertLocation : (CLLocation *) location; //for now take no paramter
 
     
 
