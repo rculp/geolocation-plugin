@@ -35,7 +35,6 @@
     LocationDBOpenHelper *dbHelper;
     LocationController *locControl;
 }
-@property dbHelper;
 
 @end
 
