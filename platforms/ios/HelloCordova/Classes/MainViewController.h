@@ -32,9 +32,10 @@
 #import "LocationController.h"
 
 @interface MainViewController : CDVViewController{
-    LocationDBOpenHelper *db;
+    LocationDBOpenHelper *dbHelper;
     LocationController *locControl;
 }
+@property dbHelper;
 
 @end
 

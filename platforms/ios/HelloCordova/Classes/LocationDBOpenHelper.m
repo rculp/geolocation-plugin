@@ -11,88 +11,22 @@
 #import "LocationController.h"
 
 @implementation LocationDBOpenHelper
-@synthesize managedObjectContext;
-
-//TO-DO: Implement InsertLocation and onUpgrade
-
-- (void) cordovaGetAllLocations:(CDVInvokedUrlCommand *)command{
-    
-    //Retrieve the all the rows in the table using the utility functions
-    NSArray *rows = [self getAllLocations];
-    
-    //Create an object that will be serialized into JSON
-    NSDictionary *json = [ [NSDictionary alloc]
-                          initWithObjectsAndKeys :
-                            rows, @"rows",
-                            @"true", @"success",
-                          nil];
-    
-    //Create an instance of CDVPluginResult
-    CDVPluginResult *pluginResult = [ CDVPluginResult
-                               resultWithStatus : CDVCommandStatus_OK
-                               messageAsDictionary : json];
-    
-    //Execute sendPlugin
-    [self.commandDelegate sendPluginResult : pluginResult callbackId : command.callbackId];
-    
-}
-
-- (void) cordovaGetLocations:(CDVInvokedUrlCommand *)command{
-    
-    NSNumber *size = [command.arguments objectAtIndex:0];
-    
-    [self getLocations:size];
-    
-    NSDictionary *json = [ [NSDictionary alloc]
-                          initWithObjectsAndKeys:
-                          @"true", @"success",
-                          nil
-                          ];
-    
-}
 
 
-- (void) cordovaClearLocations:(CDVInvokedUrlCommand *)command{
-    
-    
-    //Create an object that will be serialized into JSON
-    NSDictionary *json = [ [NSDictionary alloc]
-                          initWithObjectsAndKeys :
-                          @"true", @"success",
-                          nil];
-    
-    
-    CDVPluginResult *pluginResult = [CDVPluginResult
-                                     resultWithStatus : CDVCommandStatus_OK
-                                     messageAsDictionary:json];
-    
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    
-    
-}
-
-//--------------------------Corresponding Utility Functions-----------------------------//
-
-/**
- * Wipe all the rows in the
- * table
- *
- *
- **/
 - (void) clearLocations{
     //Prepare our fetch request
     NSFetchRequest *allLocations = [[NSFetchRequest alloc] initWithEntityName:@"LocationUpdates"];
 
     NSError *error = nil;
     
-    NSArray *results = [managedObjectContext executeFetchRequest:allLocations error:&error];
+    NSArray *results = [self.managedObjectContext executeFetchRequest:allLocations error:&error];
     
     //loop through and delete all the rows
     for(NSManagedObject *row in results){
-        [managedObjectContext deleteObject:row];
+        [self.managedObjectContext deleteObject:row];
     }
     
-    [managedObjectContext save:&error];
+    [self.managedObjectContext save:&error];
     
 }
 
@@ -112,7 +46,7 @@
     NSError *error = nil;
     
     //results
-    NSArray *results = [managedObjectContext executeFetchRequest:allLocations error:&error];
+    NSArray *results = [self.managedObjectContext executeFetchRequest:allLocations error:&error];
     
     //return array of all the rows returned
     return results;
@@ -137,7 +71,7 @@
     [request setFetchLimit:size];
     NSError *error = nil;
     
-    NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
     
     return results;
 }
@@ -158,7 +92,7 @@
     
     NSManagedObject *row = [NSEntityDescription
                                  insertNewObjectForEntityForName:@"locationUpdates"
-                                 inManagedObjectContext:managedObjectContext];
+                                 inManagedObjectContext:self.managedObjectContext];
     
     float batteryLevel = [[UIDevice currentDevice] batteryLevel];
     
@@ -185,9 +119,81 @@
                 forKey:@"battery"];
     
     NSError *error;
-    if(![managedObjectContext save:&error]){
+    if(![self.managedObjectContext save:&error]){
         NSLog(@"Failed to save - error: %@", [error localizedDescription]);
     }
-    
+   
 }
+
+#pragma mark - 
+#pragma mark Core Data stack
+/**
+ *
+ *
+ *
+ **/
+- (NSManagedObjectContext *)managedObjectContext {
+    if(managedObjectContext_ != nil){
+        return managedObjectContext_;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if(coordinator != nil){
+        managedObjectContext_ = [[NSManagedObjectContext alloc] init];
+        [managedObjectContext_ setPersistentStoreCoordinator:coordinator];
+    }
+    return managedObjectContext_;
+}
+
+/**
+ *
+ *
+ *
+ *
+ **/
+- (NSManagedObjectModel *)managedObjectModel{
+    if(managedObjectModel_ != nil){
+        return managedObjectModel_;
+    }
+    NSString *modelPath = [[NSBundle mainBundle] pathForResource:@"CoreDataPlugin" ofType:@"momd"];
+    NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
+    managedObjectModel_ = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    return managedObjectModel_;
+}
+
+/**
+ *
+ *
+ *
+ **/
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator{
+    if(persistentStoreCoordinator_ != nil){
+        return persistentStoreCoordinator_;
+    }
+    
+    NSURL *storageURL = [NSURL fileURLWithPath:[[self applicationDocDir]
+                         stringByAppendingPathComponent: @"CoreDataPlugin.sqlite"]];
+    NSError *error = nil;
+    if(![persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storageURL options:nil error:&error]){
+        
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return persistentStoreCoordinator_;
+}
+        
+/**
+ *
+ *
+ *
+ **/
+- (NSString *)applicationDocDir{
+    return [NSSearchPathForDirectoriesInDomains
+            (NSDocumentDirectory, NSUserDomainMask, YES)
+            lastObject];
+}
+                         
+
+
 @end

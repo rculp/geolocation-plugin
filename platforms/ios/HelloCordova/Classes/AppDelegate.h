@@ -26,8 +26,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import <Cordova/CDVViewController.h>
+#import "LocationDBOpenHelper.h"
 
 @interface AppDelegate : NSObject <UIApplicationDelegate>{}
 

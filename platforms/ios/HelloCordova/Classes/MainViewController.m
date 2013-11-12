@@ -74,7 +74,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    db = [[LocationDBOpenHelper alloc]init];
+    LocationDBOpenHelper *dbHelper = [[LocationDBOpenHelper alloc] init];
     locControl = [[LocationController alloc]init];
     
     // Do any additional setup after loading the view from its nib.
@@ -84,7 +84,7 @@
 
 - (void)locationUpdate : (CLLocation *)location
 {
-    [db insertLocation:(location)];
+    [dbHelper insertLocation:(location)];
 }
 
 

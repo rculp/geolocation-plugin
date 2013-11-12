@@ -6,29 +6,25 @@
 //
 //
 
-#import <Cordova/CDV.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface LocationDBOpenHelper : CDVPlugin {
-    NSManagedObjectContext *managedObjectContext;
+@interface LocationDBOpenHelper{
+    @private
+        NSManagedObjectContext *managedObjectContext_;
+        NSManagedObjectModel *managedObjectModel_;
+        NSPersistentStoreCoordinator *persistentStoreCoordinator_;
 }
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain) NSManagedObjectModel *managedObjectModel_;
+@property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator_;
 
-// Cordova JavaScript bridge functions
-//EXPOSED Functions
-- (void) cordovaGetAllLocations : (CDVInvokedUrlCommand *) command;
-- (void) cordovaGetLocations : (CDVInvokedUrlCommand *) command;
-- (void) cordovaClearLocations : (CDVInvokedUrlCommand *) command;
-- (void) cordovaInsertLocation : (CDVInvokedUrlCommand *) command;
-- (void) cordovaOnUpgrade : (CDVInvokedUrlCommand *) command;
 
-// iOS underlying functions to the Cordova JS bridge functions, utility functions
 - (NSArray*) getAllLocations;
 - (NSArray*) getLocations : (NSNumber *) size;
 - (void) clearLocations;
-- (void) insertLocation : (CLLocation *) location; //for now take no paramter
-
+- (void) insertLocation : (CLLocation *) location;
+- (NSString *)applicationDocDir;
     
 
 @end
