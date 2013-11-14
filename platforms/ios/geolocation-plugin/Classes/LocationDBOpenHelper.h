@@ -22,10 +22,11 @@
     
     
 - (NSArray*) getAllLocations;
-- (NSArray*) getLocations : (NSNumber *) size;
-- (void) clearLocations;
-- (void) insertLocation : (CLLocation *) location;
+- (NSArray*) getLocations: (NSNumber *) size;
 - (NSString *)applicationDocDir;
+- (void) clearLocations;
+- (void) insertLocation: (CLLocation *) location;
+
     
     
     @end

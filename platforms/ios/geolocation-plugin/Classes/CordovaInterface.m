@@ -11,19 +11,22 @@
 
 @interface CordovaInterface ()
 
--(void)initCordovaInterface;
 @property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
 @property (strong, nonatomic) CDVInvokedUrlCommand *errorCB;
+
+-(void)initCordovaInterface;
+
 
 @end
 
 
 @implementation CordovaInterface
-@synthesize dbHelper;
+@synthesize dbHelper, locTracking;
 @synthesize successCB, errorCB;
 
 -(void) startUpdatingLocation:(CDVInvokedUrlCommand *)command{
     
+    //TODO: Check if nil or not
     [self initCordovaInterface];
     NSUInteger argumentsCount = command.arguments.count;
     self.successCB = argumentsCount ? command.arguments[0] : nil;
@@ -32,12 +35,18 @@
     
 }
 
+
+-(void) insertCurrLocation:(CLLocation *)location{
+    [self.dbHelper insertLocation:(location)];
+    
+}
+
 -(void)initCordovaInterface{
     //set up db here
     self.dbHelper = [[LocationDBOpenHelper alloc]init];
     
     //begins tracking on init
-    //self.locTracking = [[BGLocationTracking alloc]initWithCordovaInterface: self];
+    self.locTracking = [[BGLocationTracking alloc]initWithCordovaInterface: self];
     
 }
 

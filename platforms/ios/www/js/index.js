@@ -36,7 +36,7 @@ bindEvents: function() {
 onDeviceReady: function() {
     app.receivedEvent('deviceready');
     //Start Getting Location
-    BGLocationTracking.startUpdatingLocation( app.yourCallback, app.yourErrorCallback );
+    CordovaInterface.startUpdatingLocation( app.yourCallback, app.yourErrorCallback );
 },
     
 yourCallback: function(){

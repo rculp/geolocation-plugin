@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "CordovaInterface.h"
 
-@interface BGLocationTracking : CDVPlugin <CLLocationManagerDelegate>
+@class CordovaInterface;
+@interface BGLocationTracking : NSObject<CLLocationManagerDelegate>
     
-    @property (strong, nonatomic) CLLocationManager *locationManager;
-    
-- (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command;
-    
-    @end
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) CordovaInterface *cordInterface;
+
+-(id) initWithCordovaInterface: (CordovaInterface *)cordova;
+
+@end

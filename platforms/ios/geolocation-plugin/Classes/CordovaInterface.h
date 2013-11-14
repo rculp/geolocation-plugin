@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
 #import <Cordova/CDVPlugin.h>
 #import "LocationDBOpenHelper.h"
+#import "BGLocationTracking.h"
 
-@interface CordovaInterface : CDVPlugin <CLLocationManagerDelegate>
+@interface CordovaInterface : CDVPlugin
 
-@property (strong, nonatomic) LocationDBOpenHelper *dbHelper;
+@property (retain, nonatomic) LocationDBOpenHelper *dbHelper;
+@property (retain, nonatomic) BGLocationTracking *locTracking;
 
 - (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command;
+- (void)insertCurrLocation: (CLLocation *)location;
     
 
 

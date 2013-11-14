@@ -1,5 +1,5 @@
 //
-//  BGLocationTracking.js
+//  CordovaInterface.js
 //
 //
 //  Created by Stas Gorodnichenko on 20/08/13.
@@ -10,7 +10,7 @@ var successCallBackFunction,
     errorCallBackFunction,
     successCallBackName = 'yourCallBack',
     errorCallBackName = 'yourErrorCallBack',
-    BGLocationTracking = {
+    CordovaInterface = {
     
 startUpdatingLocation: function( callbackSuccess , callbackError ) {
     if ( typeof callbackSuccess === 'function' ) {
@@ -30,14 +30,14 @@ startUpdatingLocation: function( callbackSuccess , callbackError ) {
             }
         }
         
-        cordova.exec( null, callbackError, "BGLocationTracking", "startUpdatingLocation", [successCallBackName, errorCallBackName] );
+        cordova.exec( null, callbackError, "CordovaInterface", "startUpdatingLocation", [successCallBackName, errorCallBackName] );
     } else {
         callbackError.call({ message: 'invalid signature of the success callback function' });
     }
 },
     
 stopUpdatingLocation: function( callbackStop, callbackError ) {
-    cordova.exec( callbackStop, callbackError, "BGLocationTracking", "stopUpdatingLocation", [] );
+    cordova.exec( callbackStop, callbackError, "CordovaInterface", "stopUpdatingLocation", [] );
 }
     
 };
