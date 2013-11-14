@@ -19,6 +19,7 @@
     
 - (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command;
     
+- (id) initWithCordovaInterface:(CordovaInterface*)cordova;
 
 
 @end

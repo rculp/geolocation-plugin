@@ -11,28 +11,43 @@
 
 @interface CordovaInterface ()
 
-    -(void)initCordovaInterface;
-    @property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
-    @property (strong, nonatomic) CDVInvokedUrlCommand *errorCB;
+-(void)initCordovaInterface;
+@property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
+@property (strong, nonatomic) CDVInvokedUrlCommand *errorCB;
 
 @end
 
-    
+
 @implementation CordovaInterface
-    @synthesize dbHelper, locTracking;
-    @synthesize successCB, errorCB;
+@synthesize dbHelper, locTracking;
+@synthesize successCB, errorCB;
+
+-(void) startUpdatingLocation:(CDVInvokedUrlCommand *)command{
     
-    -(void) startUpdatingLocation:(CDVInvokedUrlCommand *)command{
-        
-        [self initCordovaInterface];
-        
-        
-        
-    }
+    [self initCordovaInterface];
+    NSUInteger argumentsCount = command.arguments.count;
+    self.successCB = argumentsCount ? command.arguments[0] : nil;
+    self.errorCB = (argumentsCount > 1) ? command.arguments[1] : nil;
     
-    -(void)initCordovaInterface{
-        
-        self.dbHelper = [[LocationDBOpenHelper alloc]init];
-        self.locTracking = [[BGLocationTracking alloc]init];
-    }
+    
+}
+
+-(void)initCordovaInterface{
+    //set up db here
+    self.dbHelper = [[LocationDBOpenHelper alloc]init];
+    
+    //begins tracking on init
+    //self.locTracking = [[BGLocationTracking alloc]initWithCordovaInterface: self];
+    
+}
+
+- (void)callSuccessJSCalback:(CLLocation *)location {
+    [self.webView stringByEvaluatingJavaScriptFromString:
+     [NSString stringWithFormat:@"%@({ coords: { latitude: %f, longitude: %f}});", self.successCB, location.coordinate.latitude, location.coordinate.longitude ]];
+}
+
+- (void)callErrorJSCalback:(NSError *)error {
+    [self.webView stringByEvaluatingJavaScriptFromString:
+     [NSString stringWithFormat:@"%@({ message: '%@' });", self.errorCB, error.localizedDescription ]];
+}
 @end
