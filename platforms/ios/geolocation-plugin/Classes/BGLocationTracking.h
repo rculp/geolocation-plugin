@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import <Cordova/CDVPlugin.h>
+#import "CordovaInterface.h"
 
 @interface BGLocationTracking : CDVPlugin <CLLocationManagerDelegate>
     

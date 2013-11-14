@@ -19,7 +19,7 @@
 
 
 @implementation CordovaInterface
-@synthesize dbHelper, locTracking;
+@synthesize dbHelper;
 @synthesize successCB, errorCB;
 
 -(void) startUpdatingLocation:(CDVInvokedUrlCommand *)command{

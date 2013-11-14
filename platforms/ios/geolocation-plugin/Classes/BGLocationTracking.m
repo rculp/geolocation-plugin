@@ -14,7 +14,7 @@
 
 @interface BGLocationTracking ()
 
-//- (void)initAndStartLocationManager;
+- (void)initAndStartLocationManager;
 
 @property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
 @property (strong, nonatomic) CDVInvokedUrlCommand *errorCB;
@@ -33,7 +33,6 @@
     if(self){
         //Set Cordova so you can insert
         //new locations
-        self.cordova = cordova;
         self.locationManager = [[CLLocationManager alloc] init];
         self.locationManagerCreationDate = [NSDate date];
         [self.locationManager setDelegate:self];
@@ -47,7 +46,7 @@
 
 
 - (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command {
-    //[self initAndStartLocationManager];
+    [self initAndStartLocationManager];
     NSUInteger argumentsCount = command.arguments.count;
     self.successCB = argumentsCount ? command.arguments[0] : nil;
     self.errorCB = (argumentsCount > 1) ? command.arguments[1] : nil;
@@ -55,7 +54,7 @@
 
 
 
-/*- (void)initAndStartLocationManager {
+- (void)initAndStartLocationManager {
  
  self.locationManager = [[CLLocationManager alloc] init];
  self.locationManagerCreationDate = [NSDate date];
@@ -64,10 +63,10 @@
  locationManager.distanceFilter = DISTANCE_FILTER_IN_METERS;
  locationManager.activityType = CLActivityTypeFitness;
  [locationManager startUpdatingLocation];
- }*/
+}
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    NSLog(@"New Location: %@", [newLocation description]);
+    NSLog(@"CURRENT LOCATION: %@", [newLocation description]);
     if ([newLocation distanceFromLocation:oldLocation] >= MINIMUM_DISTANCE_BETWEEN_DIFFERENT_LOCATIONS) {
         
     }
@@ -78,7 +77,7 @@
     // if location manager is very old, need to re-init
     NSDate *currentDate = [NSDate date];
     if ([currentDate timeIntervalSinceDate:self.locationManagerCreationDate] >= LOCATION_MANAGER_LIFETIME_MAX) {
-        //[self initAndStartLocationManager];
+        [self initAndStartLocationManager];
     }
 }
 

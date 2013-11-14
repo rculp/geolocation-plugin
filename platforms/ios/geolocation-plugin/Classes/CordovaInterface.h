@@ -10,16 +10,13 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Cordova/CDVPlugin.h>
 #import "LocationDBOpenHelper.h"
-#import "BGLocationTracking.h"
 
 @interface CordovaInterface : CDVPlugin <CLLocationManagerDelegate>
 
 @property (strong, nonatomic) LocationDBOpenHelper *dbHelper;
-@property (strong, nonatomic) BGLocationTracking *locTracking;
-    
+
 - (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command;
     
-- (id) initWithCordovaInterface:(CordovaInterface*)cordova;
 
 
 @end
