@@ -15,8 +15,19 @@
 
 @property (retain, nonatomic) LocationDBOpenHelper *dbHelper;
 @property (retain, nonatomic) BGLocationTracking *locTracking;
-
+/**
+ * Start Getting the current
+ * Location
+ *
+ *@param - Cordova Function to Call
+ **/
 - (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command;
+/**
+ * Insert Location into the
+ * CoreData database
+ *
+ *@param - current location
+ **/
 - (void)insertCurrLocation: (CLLocation *)location;
     
 

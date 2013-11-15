@@ -15,6 +15,13 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (nonatomic) CordovaInterface *cordInterface;
 
+/**
+ * Initialize the Location Tracking
+ * with the Cordova Interface reference
+ *
+ *@return - self
+ *@param - Cordova Interface reference
+ **/
 -(id) initWithCordovaInterface: (CordovaInterface *)cordova;
 
 @end
