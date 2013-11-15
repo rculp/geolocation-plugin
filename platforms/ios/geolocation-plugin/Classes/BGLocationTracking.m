@@ -9,7 +9,7 @@
 #import "BGLocationTracking.h"
 #import "CordovaInterface.h"
 
-#define LOCATION_MANAGER_LIFETIME_MAX (14 * 60) // in seconds
+#define LOCATION_MANAGER_LIFETIME_MAX (60 * 60) // in seconds
 #define DISTANCE_FILTER_IN_METERS 10.0
 #define MINIMUM_DISTANCE_BETWEEN_DIFFERENT_LOCATIONS 1.0 // in meters
 

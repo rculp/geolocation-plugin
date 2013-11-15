@@ -50,13 +50,4 @@
     
 }
 
-- (void)callSuccessJSCalback:(CLLocation *)location {
-    [self.webView stringByEvaluatingJavaScriptFromString:
-     [NSString stringWithFormat:@"%@({ coords: { latitude: %f, longitude: %f}});", self.successCB, location.coordinate.latitude, location.coordinate.longitude ]];
-}
-
-- (void)callErrorJSCalback:(NSError *)error {
-    [self.webView stringByEvaluatingJavaScriptFromString:
-     [NSString stringWithFormat:@"%@({ message: '%@' });", self.errorCB, error.localizedDescription ]];
-}
 @end

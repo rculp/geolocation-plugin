@@ -154,7 +154,7 @@
     if(managedObjectModel_ != nil){
         return managedObjectModel_;
     }
-    NSString *modelPath = [[NSBundle mainBundle] pathForResource:@"CoreDataPlugin" ofType:@"momd"];
+    NSString *modelPath = [[NSBundle mainBundle] pathForResource:@"LocationUpdates.sqlite" ofType:@"sqlite"];
     NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
     managedObjectModel_ = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return managedObjectModel_;
@@ -166,13 +166,17 @@
      *
      **/
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator{
+    
     if(persistentStoreCoordinator_ != nil){
         return persistentStoreCoordinator_;
     }
     
     NSURL *storageURL = [NSURL fileURLWithPath:[[self applicationDocDir]
-                                                stringByAppendingPathComponent: @"CoreDataPlugin.sqlite"]];
+                                                stringByAppendingPathComponent: @"LocationUpdates.sqlite"]];
     NSError *error = nil;
+    persistentStoreCoordinator_ = [[NSPersistentStoreCoordinator alloc]
+                                   initWithManagedObjectModel:[self managedObjectModel]];
+
     if(![persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storageURL options:nil error:&error]){
         
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);

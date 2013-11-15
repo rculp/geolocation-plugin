@@ -17,8 +17,8 @@
 }
     
     @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-    @property (nonatomic, retain) NSManagedObjectModel *managedObjectModel_;
-    @property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator_;
+    @property (nonatomic, retain) NSManagedObjectModel *managedObjectModel;
+    @property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
     
     
 - (NSArray*) getAllLocations;
