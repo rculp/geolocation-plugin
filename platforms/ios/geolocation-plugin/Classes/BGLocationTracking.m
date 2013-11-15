@@ -46,12 +46,8 @@
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    NSLog(@"CURRENT LOCATION: %@", [newLocation description]);
     if ([newLocation distanceFromLocation:oldLocation] >= MINIMUM_DISTANCE_BETWEEN_DIFFERENT_LOCATIONS) {
         [self.cordInterface insertCurrLocation:(newLocation)];
-    }
-    else {
-        NSLog(@"New location is almost equal to old location. Ignore update");
     }
     
     // if location manager is very old, need to re-init

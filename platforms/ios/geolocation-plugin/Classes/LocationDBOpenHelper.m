@@ -221,7 +221,9 @@
     NSError *errorCoor = nil;
     persistentStoreCoordinator_ = [[NSPersistentStoreCoordinator alloc]
                                    initWithManagedObjectModel:[self managedObjectModel]];
-    if(![persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storageURL options:nil error:&errorCoor]){
+    //specifies to store in sqlite versus the .sqlite-wal files
+    NSDictionary *options = @{ NSSQLitePragmasOption : @{@"journal_mode" : @"DELETE"}};
+    if(![persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storageURL options:options error:&errorCoor]){
         
         NSLog(@"Unresolved error %@, %@", errorCoor, [errorCoor userInfo]);
         abort();
