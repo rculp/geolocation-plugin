@@ -28,10 +28,14 @@
 @synthesize dbHelper, locTracking;
 @synthesize successCB, errorCB;
 
+#pragma-
+#pragma mark - Interface functions
 -(void) startUpdatingLocation:(CDVInvokedUrlCommand *)command{
     
-    //TODO: Check if nil or not
-    [self initCordovaInterface];
+    
+    if(self.dbHelper == nil && self.locTracking == nil){
+        [self initCordovaInterface];
+    }
     NSUInteger argumentsCount = command.arguments.count;
     self.successCB = argumentsCount ? command.arguments[0] : nil;
     self.errorCB = (argumentsCount > 1) ? command.arguments[1] : nil;
@@ -45,6 +49,19 @@
     
 }
 
+-(NSArray*) getAllLocations{
+    return [self.dbHelper getAllLocations];
+}
+
+-(NSArray*) getLocations:(NSUInteger)size{
+    return [self.dbHelper getLocations:(size)];
+}
+
+-(void) clearLocations{
+    [self.dbHelper clearLocations];
+}
+#pragma-
+#pragma mark - Initialize functions
 -(void)initCordovaInterface{
     //set up db here
     self.dbHelper = [[LocationDBOpenHelper alloc]init];

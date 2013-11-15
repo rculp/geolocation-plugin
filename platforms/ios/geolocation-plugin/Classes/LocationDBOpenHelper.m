@@ -37,6 +37,8 @@
 /**
  * Store the Old and new Locations
  * in order to calculate the Bearings
+ *
+ *@param- current location
  **/
 - (void)storeLocs: (CLLocation *)loc;
 
