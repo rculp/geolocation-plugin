@@ -36,7 +36,7 @@ bindEvents: function() {
 onDeviceReady: function() {
     app.receivedEvent('deviceready');
     //Start Getting Location
-    CordovaInterface.startUpdatingLocation( app.yourCallback, app.yourErrorCallback );
+    CDVInterface.startUpdatingLocation( app.yourCallback, app.yourErrorCallback );
 },
     
 yourCallback: function(){

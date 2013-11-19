@@ -1,15 +1,15 @@
 //
-//  CordovaInterface.m
+//  CDVInterface.m
 //  geolocation-plugin
 //
 //  Created by Christopher Ketant on 11/14/13.
 //
 //
 
-#import "CordovaInterface.h"
+#import "CDVInterface.h"
 
 
-@interface CordovaInterface ()
+@interface CDVInterface ()
 
 @property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
 @property (strong, nonatomic) CDVInvokedUrlCommand *errorCB;
@@ -18,13 +18,13 @@
  * objects we need for
  * the Cordova Interface
  **/
--(void)initCordovaInterface;
+-(void)initCDVInterface;
 
 
 @end
 
 
-@implementation CordovaInterface
+@implementation CDVInterface
 @synthesize dbHelper, locTracking;
 @synthesize successCB, errorCB;
 
@@ -34,7 +34,7 @@
     
     
     if(self.dbHelper == nil && self.locTracking == nil){
-        [self initCordovaInterface];
+        [self initCDVInterface];
     }
     NSUInteger argumentsCount = command.arguments.count;
     self.successCB = argumentsCount ? command.arguments[0] : nil;
@@ -62,12 +62,12 @@
 }
 #pragma-
 #pragma mark - Initialize functions
--(void)initCordovaInterface{
+-(void)initCDVInterface{
     //set up db here
     self.dbHelper = [[LocationDBOpenHelper alloc]init];
     
     //begins tracking on init
-    self.locTracking = [[BGLocationTracking alloc]initWithCordovaInterface: self];
+    self.locTracking = [[BGLocationTracking alloc]initWithCDVInterface: self];
     
 }
 

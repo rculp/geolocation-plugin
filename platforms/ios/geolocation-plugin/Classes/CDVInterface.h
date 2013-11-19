@@ -1,5 +1,5 @@
 //
-//  CordovaInterface.h
+//  CDVInterface.h
 //  geolocation-plugin
 //
 // The main class used to interface
@@ -14,7 +14,7 @@
 #import "LocationDBOpenHelper.h"
 #import "BGLocationTracking.h"
 
-@interface CordovaInterface : CDVPlugin
+@interface CDVInterface : CDVPlugin
 
 @property (retain, nonatomic) LocationDBOpenHelper *dbHelper;
 @property (retain, nonatomic) BGLocationTracking *locTracking;
@@ -56,7 +56,7 @@
  * emtpy them
  *
  * @param - size
- * @return - Array of locations
+ * @return - Array of locationsw
  *
  **/
 - (void) clearLocations;

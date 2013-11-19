@@ -26,8 +26,8 @@
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
-    <feature name="CordovaInterface">
-        <param name="ios-package" value="CordovaInterface" />
+    <feature name="CDVInterface">
+        <param name="ios-package" value="CDVInterface" />
         <param name="onload" value="true" />
     </feature>
     <author email="dev@callback.apache.org" href="http://cordova.io">

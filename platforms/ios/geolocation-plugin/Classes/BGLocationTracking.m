@@ -7,7 +7,7 @@
 //
 
 #import "BGLocationTracking.h"
-#import "CordovaInterface.h"
+#import "CDVInterface.h"
 
 #define LOCATION_MANAGER_LIFETIME_MAX (60 * 60) // in seconds
 #define DISTANCE_FILTER_IN_METERS 10.0
@@ -29,7 +29,7 @@
 @synthesize locationManagerCreationDate;
 
 
-- (id) initWithCordovaInterface:(CordovaInterface*)cordova{
+- (id) initWithCDVInterface:(CDVInterface*)cordova{
     self = [super init];
     if(self){
         self.cordInterface = cordova;
@@ -47,6 +47,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     if ([newLocation distanceFromLocation:oldLocation] >= MINIMUM_DISTANCE_BETWEEN_DIFFERENT_LOCATIONS) {
+        NSLog(@"%@", [newLocation description]);
         [self.cordInterface insertCurrLocation:(newLocation)];
     }
     

@@ -35,7 +35,7 @@
 		8512428D18340F42008F9061 /* LocationDBOpenHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8512428B18340F42008F9061 /* LocationDBOpenHelper.m */; };
 		8512429218340FDD008F9061 /* BGLocationTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8512429118340FDD008F9061 /* BGLocationTracking.m */; };
 		85124294183410AB008F9061 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85124293183410AB008F9061 /* CoreData.framework */; };
-		8564F63E18355F0F000FC590 /* CordovaInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 8564F63D18355F0F000FC590 /* CordovaInterface.m */; };
+		8564F63E18355F0F000FC590 /* CDVInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 8564F63D18355F0F000FC590 /* CDVInterface.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		D4C8C5F625A44A958FC12F4E /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E1E875651D4F3EABB9FAE2 /* CDVLogger.m */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
@@ -153,8 +153,8 @@
 		851242C518341153008F9061 /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		851242C818341153008F9061 /* CordovaLib_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CordovaLib_Prefix.pch; sourceTree = "<group>"; };
 		851242C918341153008F9061 /* VERSION */ = {isa = PBXFileReference; lastKnownFileType = text; path = VERSION; sourceTree = "<group>"; };
-		8564F63C18355F0F000FC590 /* CordovaInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CordovaInterface.h; sourceTree = "<group>"; };
-		8564F63D18355F0F000FC590 /* CordovaInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CordovaInterface.m; sourceTree = "<group>"; };
+		8564F63C18355F0F000FC590 /* CDVInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVInterface.h; sourceTree = "<group>"; };
+		8564F63D18355F0F000FC590 /* CDVInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVInterface.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* geolocation-plugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "geolocation-plugin-Info.plist"; path = "../geolocation-plugin-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "geolocation-plugin/config.xml"; sourceTree = "<group>"; };
@@ -352,8 +352,8 @@
 			children = (
 				8512428F18340FBB008F9061 /* CoreLocation */,
 				8512428E18340FB2008F9061 /* CoreData */,
-				8564F63C18355F0F000FC590 /* CordovaInterface.h */,
-				8564F63D18355F0F000FC590 /* CordovaInterface.m */,
+				8564F63C18355F0F000FC590 /* CDVInterface.h */,
+				8564F63D18355F0F000FC590 /* CDVInterface.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -579,7 +579,7 @@
 			files = (
 				8512428D18340F42008F9061 /* LocationDBOpenHelper.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				8564F63E18355F0F000FC590 /* CordovaInterface.m in Sources */,
+				8564F63E18355F0F000FC590 /* CDVInterface.m in Sources */,
 				8512428618340F08008F9061 /* LocationUpdates.m in Sources */,
 				8512429218340FDD008F9061 /* BGLocationTracking.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
