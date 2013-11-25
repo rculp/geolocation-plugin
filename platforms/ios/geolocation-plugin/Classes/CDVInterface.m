@@ -13,13 +13,6 @@
 
 @property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
 @property (strong, nonatomic) CDVInvokedUrlCommand *errorCB;
-/**
- * Initialize all the
- * objects we need for
- * the Cordova Interface
- **/
--(void)initCDVInterface;
-
 
 @end
 

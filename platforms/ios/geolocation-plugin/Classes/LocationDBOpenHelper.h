@@ -3,7 +3,9 @@
 //  geolocation-plugin
 //
 //  Created by Christopher Ketant on 11/14/13.
-//
+// This file replicates the needed functions found in
+// the Android Application's file titled LocationDBOpenHelper.java
+// found on the Android Mobile App Tour Trak Project
 //
 
 #import <Foundation/Foundation.h>

@@ -37,6 +37,7 @@ onDeviceReady: function() {
     app.receivedEvent('deviceready');
     //Start Getting Location
     CDVInterface.startUpdatingLocation( app.yourCallback, app.yourErrorCallback );
+    //Start the plugin here
 },
     
 yourCallback: function(){
