@@ -4,6 +4,9 @@
 //
 // Sends the Location Data to the Server
 //
+// TODO- 1. Get Request: getConfig() REQUEST[] RESPONSE[TourConfigData]
+// TODO- 2. Post Request: register() REQUEST[OS, Device, tourId] RESPONSE[rider_id]
+//
 //  Created by Christopher Ketant on 11/28/13.
 //
 //
