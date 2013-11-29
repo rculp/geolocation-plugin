@@ -6,14 +6,12 @@
 //
 //
 
-#import "ServiceConnector.h"
 #import "CDVInterface.h"
 
 
 
 @interface CDVInterface ()
 
-@property (strong, nonatomic) ServiceConnector *connection;
 @property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
 @property (strong, nonatomic) CDVInvokedUrlCommand *errorCB;
 
@@ -22,16 +20,16 @@
 
 
 @implementation CDVInterface
-@synthesize dbHelper, locTracking;
+@synthesize dbHelper, locTracking, connector;
 @synthesize successCB, errorCB;
 
-int locationCounter = 0;
 
-#pragma mark - Interface functions
+
+#pragma mark - start function
 -(void) startUpdatingLocation:(CDVInvokedUrlCommand *)command{
     
     
-    if(self.dbHelper == nil && self.locTracking == nil){
+    if(self.dbHelper == nil && self.locTracking == nil && self.connector == nil){
         [self initCDVInterface];
     }
     NSUInteger argumentsCount = command.arguments.count;
@@ -42,18 +40,22 @@ int locationCounter = 0;
 }
 
 
--(void) insertCurrLocation:(CLLocation *)location{
-    if(locationCounter < 1){
-        NSLog(@"%@",[location description]);
-        
-        //[self.dbHelper insertLocation:(location)];//comment out for now, not integrating db yet
-        _connection = [[ServiceConnector alloc]init];
-        
-        [_connection postLocation:location];
-        
-        locationCounter++;
-    }
+#pragma mark - Initialize
+-(void)initCDVInterface{
     
+    //set up db here
+    self.dbHelper = [[LocationDBOpenHelper alloc]init];
+    
+    //begins tracking on init
+    self.locTracking = [[BGLocationTracking alloc]initWithCDVInterface: self];
+    
+    self.connector = [[ServiceConnector alloc]init];
+    
+}
+
+#pragma mark - Interface functions
+-(void) insertCurrLocation:(CLLocation *)location{
+    [self.dbHelper insertLocation:(location)];
 }
 
 -(NSArray*) getAllLocations{
@@ -68,16 +70,5 @@ int locationCounter = 0;
     [self.dbHelper clearLocations];
 }
 
-
-
-#pragma mark - Initialize functions
--(void)initCDVInterface{
-    //set up db here
-    self.dbHelper = [[LocationDBOpenHelper alloc]init];
-    
-    //begins tracking on init
-    self.locTracking = [[BGLocationTracking alloc]initWithCDVInterface: self];
-    
-}
 
 @end

@@ -23,6 +23,14 @@
  **/
 -(NSDictionary*)getDict:(CLLocation*)loc;
 
+/**
+ * Get all the locations in proper format
+ *
+ * @param- Array of Locations from LocationDBOpenHelper
+ * @return- Array of Dictionaries
+ **/
+-(NSArray *)getLocations:(NSArray*)dbLocs;
+
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error;
@@ -43,7 +51,7 @@
 static NSString *SERVER_LOCATION_UPDATE_URL = @"http://devcycle.se.rit.edu/location_update/";
 
 
-#pragma mark - Post Methods
+#pragma mark - Utility Functions
 
 -(NSDictionary*)getDict:(CLLocation *)loc{
     
@@ -94,30 +102,43 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"http://devcycle.se.rit.edu/locat
     
 }
 
--(void)postLocation:(CLLocation *)location{
+-(NSArray*)getLocations:(NSArray *)dbLocs{
+    
+    //Array of the locations to send
+    NSMutableArray *locations = [[NSMutableArray alloc]init];
+    
+
+    
+    int size = [dbLocs count];
+    
+    if(size > 0){
+    
+        for (int index=0; index<size; index++) {
+        
+            //create the dictionary object that will be sent as json
+            NSDictionary *dict = [self getDict: [dbLocs objectAtIndex:index] ];
+        
+            //add the location dictionary
+            //to the locations array
+            [locations addObject:dict];
+        }
+    }
+    
+    return locations;
+}
+
+#pragma mark - Post
+
+-(void)postLocations:(NSArray *)dbLocations{
     //build up request url
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:
                                     [NSURL URLWithString:SERVER_LOCATION_UPDATE_URL]];
     //add Method
     [request setHTTPMethod:@"POST"];
     
-    //Array of the locations
-    //to send
-    NSMutableArray *locations = [[NSMutableArray alloc]init];
-    
-    //TODO- add for loop to add all the locations
-    //to array
-    
-//loop start
-    
-    //create the dictionary object that will be sent as json
-    NSDictionary *dict = [self getDict:location];
-    
-    //add the location dictionary
-    //to the locations array
-    [locations addObject:dict];
-
-//loop end
+    //get all the locations in the proper format
+    //in dictionaries all within an array
+    NSArray *locations = [self getLocations:dbLocations];
     
     NSMutableDictionary *json = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                  @"1", @"rider_id", //rider's id

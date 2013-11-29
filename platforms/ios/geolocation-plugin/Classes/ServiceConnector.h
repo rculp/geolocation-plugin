@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "CDVInterface.h"
 
 /**
  * The Delegate for the POST request
@@ -26,10 +27,15 @@
 @interface ServiceConnector : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @property (strong,nonatomic) id <ServiceConnectorDelegate> delegate;
+@property (nonatomic) CDVInterface *cordInterface;
 
 
 /**
  * Post the Location to the Server
+ *
+ * CDVInterface calls getAllLocations or getLocations(size) 
+ * and the return object is passed to this method
+ *
  * The 'location_update' path is expecting and 
  * returning the following
  *
@@ -62,6 +68,6 @@
  * }
  * @param- the Location or Rider
  **/
--(void)postLocation: (CLLocation *)location;
+-(void)postLocations: (CLLocation *)location;
 
 @end

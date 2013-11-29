@@ -7,10 +7,6 @@
 //
 //  Created by Christopher Ketant on 11/14/13.
 //
-// TO-DO: Implement a [static .plist vs CoreData] TourConfigData files
-// TO-DO: implement the new interface functions
-// TO-DO: Find out when interface functions are called during app life-time
-// TO-DO: Do we need to create another plugin now?
 //
 //
 
@@ -18,11 +14,13 @@
 #import <Cordova/CDVPlugin.h>
 #import "LocationDBOpenHelper.h"
 #import "BGLocationTracking.h"
+#import "ServiceConnector.h"
 
 @interface CDVInterface : CDVPlugin
 
 @property (retain, nonatomic) LocationDBOpenHelper *dbHelper;
 @property (retain, nonatomic) BGLocationTracking *locTracking;
+@property (retain, nonatomic) ServiceConnector *connector;
 
 
 #pragma-
