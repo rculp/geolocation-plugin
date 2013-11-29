@@ -6,13 +6,17 @@
 //
 //
 
+#import "ServiceConnector.h"
 #import "CDVInterface.h"
+
 
 
 @interface CDVInterface ()
 
+@property (strong, nonatomic) ServiceConnector *connection;
 @property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
 @property (strong, nonatomic) CDVInvokedUrlCommand *errorCB;
+
 
 @end
 
@@ -21,7 +25,8 @@
 @synthesize dbHelper, locTracking;
 @synthesize successCB, errorCB;
 
-#pragma-
+int locationCounter = 0;
+
 #pragma mark - Interface functions
 -(void) startUpdatingLocation:(CDVInvokedUrlCommand *)command{
     
@@ -38,7 +43,16 @@
 
 
 -(void) insertCurrLocation:(CLLocation *)location{
-    [self.dbHelper insertLocation:(location)];
+    if(locationCounter < 1){
+        NSLog(@"%@",[location description]);
+        
+        //[self.dbHelper insertLocation:(location)];//comment out for now, not integrating db yet
+        _connection = [[ServiceConnector alloc]init];
+        
+        [_connection postLocation:location];
+        
+        locationCounter++;
+    }
     
 }
 
@@ -53,7 +67,9 @@
 -(void) clearLocations{
     [self.dbHelper clearLocations];
 }
-#pragma-
+
+
+
 #pragma mark - Initialize functions
 -(void)initCDVInterface{
     //set up db here
