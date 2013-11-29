@@ -36,27 +36,6 @@
  **/
 - (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command;
 
-/**
- * Get the configuration for the Tour Config Data
- * this is also used to update the Tour Config Data
- * if changes are made on the admin side
- **/
-- (void)getConfig: (CDVInvokedUrlCommand *)command;
-
-/**
- * Register the Rider with the DCS Server
- * The response to this Get Request is the
- * ID of the rider
- **/
-- (void)registerRider: (CDVInvokedUrlCommand *)command;
-
-/**
- * Register the Push Id
- * <Formerly for GCM must implement the
- * equivalent for APNS>
- **/
-- (void)registerPushId: (CDVInvokedUrlCommand *)command;
-
 
 
 #pragma-
