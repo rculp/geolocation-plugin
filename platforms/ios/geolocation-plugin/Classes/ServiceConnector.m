@@ -7,11 +7,15 @@
 //
 
 #import "ServiceConnector.h"
+#import "CDVInterface.h"
 
 
 @interface ServiceConnector()
 
 @property (nonatomic) NSData* receivedData;
+
+@property (nonatomic) CDVInterface *cordInterface;
+
 
 
 /**

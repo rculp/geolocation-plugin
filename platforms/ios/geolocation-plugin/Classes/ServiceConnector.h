@@ -6,6 +6,7 @@
 //
 // TODO- 1. Get Request: getConfig() REQUEST[] RESPONSE[TourConfigData]
 // TODO- 2. Post Request: register() REQUEST[OS, Device, tourId] RESPONSE[rider_id]
+// TODO- 3. Implement algorithm 
 //
 //  Created by Christopher Ketant on 11/28/13.
 //
@@ -13,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "CDVInterface.h"
+
 
 /**
  * The Delegate for the POST request
@@ -30,7 +31,6 @@
 @interface ServiceConnector : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @property (strong,nonatomic) id <ServiceConnectorDelegate> delegate;
-@property (nonatomic) CDVInterface *cordInterface;
 
 
 /**

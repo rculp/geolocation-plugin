@@ -24,7 +24,7 @@
 
 
 #pragma-
-#pragma mark - DCS Interface functions, called by Sencha
+#pragma mark - Sencha interface functions
 
 /**
  * Start Getting the current

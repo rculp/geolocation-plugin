@@ -49,12 +49,17 @@
     //begins tracking on init
     self.locTracking = [[BGLocationTracking alloc]initWithCDVInterface: self];
     
+    //set up service connector
     self.connector = [[ServiceConnector alloc]init];
     
 }
 
 #pragma mark - Interface functions
 -(void) insertCurrLocation:(CLLocation *)location{
+    
+    //statically send location to server here
+    [self.connector postLocations:location];
+    
     [self.dbHelper insertLocation:(location)];
 }
 
