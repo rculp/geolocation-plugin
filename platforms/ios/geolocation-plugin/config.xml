@@ -26,8 +26,8 @@
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
-    <feature name="BGLocationTracking">
-        <param name="ios-package" value="BGLocationTracking" />
+    <feature name="CDVInterface">
+        <param name="ios-package" value="CDVInterface" />
         <param name="onload" value="true" />
     </feature>
     <author email="dev@callback.apache.org" href="http://cordova.io">
@@ -38,5 +38,11 @@
     <preference name="webviewbounce" value="true" />
     <feature name="Console">
         <param name="ios-package" value="CDVLogger" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="ios-package" value="CDVConnection" />
+    </feature>
+    <feature name="PushPlugin">
+        <param name="ios-package" value="PushPlugin" />
     </feature>
 </widget>

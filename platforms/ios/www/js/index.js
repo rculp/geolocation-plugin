@@ -36,7 +36,8 @@ bindEvents: function() {
 onDeviceReady: function() {
     app.receivedEvent('deviceready');
     //Start Getting Location
-    BGLocationTracking.startUpdatingLocation( app.yourCallback, app.yourErrorCallback );
+    CDVInterface.startUpdatingLocation( app.yourCallback, app.yourErrorCallback );
+    //Start the plugin here
 },
     
 yourCallback: function(){

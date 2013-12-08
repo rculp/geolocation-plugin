@@ -9,8 +9,83 @@
 #import "LocationDBOpenHelper.h"
 #import "LocationUpdates.h"
 
+#define RadiansToDegrees(radians)(radians * 180.0/M_PI)
+#define DegreesToRadians(degrees)(degrees * M_PI/180.0)
+
+@interface LocationDBOpenHelper ()
+
+@property (nonatomic) float bearing;
+@property (nonatomic, strong) CLLocation *olderLoc, *newerLoc;
+@property (nonatomic) int toggleLoc;
+
+/**
+ * Gets the Application Directory
+ * for the Current App
+ *
+ * @return - path
+ **/
+- (NSString *)applicationDocDir;
+
+/**
+ * Get the Bearing for the
+ * current location
+ *
+ * @return - bearing
+ **/
+- (float)getBearing;
+
+/**
+ * Store the Old and new Locations
+ * in order to calculate the Bearings
+ *
+ *@param- current location
+ **/
+- (void)storeLocs: (CLLocation *)loc;
+
+@end
+
 @implementation LocationDBOpenHelper
+
+#pragma mark -
+#pragma mark Helper Functions
+
+- (float) getBearing{
+    if(_olderLoc != nil && _newerLoc != nil){
+        float lat1 = DegreesToRadians(_olderLoc.coordinate.latitude);
+        float lon1 = DegreesToRadians(_olderLoc.coordinate.longitude);
     
+        float lat2 = DegreesToRadians(_newerLoc.coordinate.latitude);
+        float lon2 = DegreesToRadians(_newerLoc.coordinate.longitude);
+    
+        float dLon = lon2 - lon1;
+    
+        float y = sin(dLon) * cos(lat2);
+        float x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon);
+        float radiansBearing = atan2(y, x);
+        if(radiansBearing < 0.0)
+        {
+            radiansBearing += 2*M_PI;
+        }
+    
+        return radiansBearing;
+    }else return 0;
+}
+
+
+- (void) storeLocs:(CLLocation *)loc{
+    
+    if(_olderLoc == nil || _toggleLoc == 1){
+        _olderLoc = loc;
+        _toggleLoc = 0;
+    }else if (_newerLoc == nil || _toggleLoc == 0){
+        _newerLoc = loc;
+        _toggleLoc = 1;
+    }
+
+}
+
+#pragma mark -
+#pragma mark DB Interface Functions
     
 - (void) clearLocations{
     //Prepare our fetch request
@@ -31,11 +106,7 @@
     
     
     
-    /**
-     * Get all the rows in the table
-     *
-     * @return - results array
-     **/
+
 - (NSArray*)getAllLocations{
     
     //Setup our Fetch Request
@@ -52,13 +123,8 @@
     
 }
     
-    /**
-     * Get a certain number of rows
-     * in ascending order based on time
-     *
-     * @return - results array
-     **/
-- (NSArray*)getLocations:(NSNumber *) size {
+
+- (NSArray*)getLocations:(NSUInteger) size {
     
     //Set up our fetch request
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"LocationUpdates"];
@@ -75,50 +141,46 @@
     return results;
 }
     
-    /**
-     *
-     * Insert a Location Controller in the table
-     *
-     *
-     * @return - id entry
-     **/
+
 -(void)insertLocation:(CLLocation *) location{
+    
+    //Grab context
+    NSManagedObjectContext *context = [self managedObjectContext];
     
     NSString *dateStr = [NSDateFormatter
                          localizedStringFromDate:location.timestamp
                          dateStyle:NSDateFormatterShortStyle
                          timeStyle:NSDateFormatterFullStyle];
+    //Grab LocationUpdates Entity
+    LocationUpdates *loc = [NSEntityDescription insertNewObjectForEntityForName:@"LocationUpdates" inManagedObjectContext:context];
     
-    NSManagedObject *row = [NSEntityDescription
-                            insertNewObjectForEntityForName:@"locationUpdates"
-                            inManagedObjectContext:self.managedObjectContext];
+    //set time
+    loc.time = [NSString stringWithFormat:@"%@", dateStr];
     
+    //set latitude
+    loc.latitude = [NSString stringWithFormat:@"%g", location.coordinate.latitude];
+    
+    //set latitude
+    loc.longitude = [NSString stringWithFormat:@"%g", location.coordinate.longitude];
+    
+    //set speed
+    loc.speed = [NSString stringWithFormat:@"%g", location.speed];
+    
+    //set battery
     float batteryLevel = [[UIDevice currentDevice] batteryLevel];
+    loc.battery = [NSString stringWithFormat:@"%g", batteryLevel];
     
-    [row setValue:dateStr forKey:@"time"];
+    //set accuracy
+    loc.accuracy = [NSString stringWithFormat:@"%g", location.horizontalAccuracy];
     
-    [row setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude]
-           forKey:@"latitude"];
+    //set bearing
+    loc.bearing = [NSString stringWithFormat:@"%g", [self getBearing]];
     
-    [row setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude]
-           forKey:@"longitude"];
-    
-    [row setValue:[NSString stringWithFormat:@"%f",[location horizontalAccuracy]]
-           forKey:@"accuracy"];
-    
-    [row setValue:[NSString stringWithFormat:@"%f",[location speed]]
-           forKey:@"speed"];
-    
-    [row setValue:[NSString stringWithFormat:@"%f",[location course]]
-           forKey:@"bearing"];
-    
-    [row setValue:@"TEST" forKey:@"provider"];
-    
-    [row setValue:[NSString stringWithFormat:@"%f",batteryLevel]
-           forKey:@"battery"];
+    //set provider
+    loc.provider = @"NO PROVIDER";
     
     NSError *error;
-    if(![self.managedObjectContext save:&error]){
+    if(![context save:&error]){
         NSLog(@"Failed to save - error: %@", [error localizedDescription]);
     }
     
@@ -126,11 +188,7 @@
     
 #pragma mark -
 #pragma mark Core Data stack
-    /**
-     *
-     *
-     *
-     **/
+
 - (NSManagedObjectContext *)managedObjectContext {
     if(managedObjectContext_ != nil){
         return managedObjectContext_;
@@ -139,54 +197,45 @@
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if(coordinator != nil){
         managedObjectContext_ = [[NSManagedObjectContext alloc] init];
-        [managedObjectContext_ setPersistentStoreCoordinator:coordinator];
+        [managedObjectContext_ setPersistentStoreCoordinator: coordinator];
     }
     return managedObjectContext_;
 }
     
-    /**
-     *
-     *
-     *
-     *
-     **/
+
 - (NSManagedObjectModel *)managedObjectModel{
     if(managedObjectModel_ != nil){
         return managedObjectModel_;
     }
-    NSString *modelPath = [[NSBundle mainBundle] pathForResource:@"CoreDataPlugin" ofType:@"momd"];
-    NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
-    managedObjectModel_ = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    managedObjectModel_ = [NSManagedObjectModel mergedModelFromBundles:nil];
     return managedObjectModel_;
 }
     
-    /**
-     *
-     *
-     *
-     **/
+
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator{
+    
     if(persistentStoreCoordinator_ != nil){
         return persistentStoreCoordinator_;
     }
     
     NSURL *storageURL = [NSURL fileURLWithPath:[[self applicationDocDir]
-                                                stringByAppendingPathComponent: @"CoreDataPlugin.sqlite"]];
-    NSError *error = nil;
-    if(![persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storageURL options:nil error:&error]){
+                                                stringByAppendingPathComponent: @"LocationUpdates.sqlite"]];
+    NSError *errorCoor = nil;
+    persistentStoreCoordinator_ = [[NSPersistentStoreCoordinator alloc]
+                                   initWithManagedObjectModel:[self managedObjectModel]];
+    //specifies to store in sqlite versus the .sqlite-wal files
+    NSDictionary *options = @{ NSSQLitePragmasOption : @{@"journal_mode" : @"DELETE"}};
+    if(![persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storageURL options:options error:&errorCoor]){
         
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        NSLog(@"Unresolved error %@, %@", errorCoor, [errorCoor userInfo]);
         abort();
     }
+    
     
     return persistentStoreCoordinator_;
 }
     
-    /**
-     *
-     *
-     *
-     **/
+
 - (NSString *)applicationDocDir{
     return [NSSearchPathForDirectoriesInDomains
             (NSDocumentDirectory, NSUserDomainMask, YES)
