@@ -16,6 +16,7 @@
 @property (nonatomic) NSData* receivedData;
 @property (nonatomic) CDVInterface *cordInterface;
 @property (nonatomic) NSString *DCSUrl, *tourConfigId, *riderId, *pushId;
+@property (nonatomic) NSString *startTime, *endTime;
 
 
 
@@ -49,7 +50,7 @@
 
 
 @implementation ServiceConnector
-@synthesize DCSUrl, tourConfigId, riderId, pushId;
+@synthesize DCSUrl, startTime, endTime, tourConfigId, riderId;
 
 /*
  * URL to the SERVER
@@ -60,17 +61,19 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
 #pragma mark - Init Function
 
 -(id) initWithParams:(NSString *)vDCSUrl
+                    :(NSString *)vStartTime
+                    :(NSString *)vEndTime
                     :(NSString *)vTourConfigId
-                    :(NSString *)vRiderId
-                    :(NSString *)vPushId{
-    
+                    :(NSString *)vRiderId{
+
     self = [super init];
     if(self){
         
         self.DCSUrl = vDCSUrl;
+        self.startTime = vStartTime;
+        self.endTime = vEndTime;
         self.tourConfigId = vTourConfigId;
         self.riderId = vRiderId;
-        self.pushId = vPushId;
     }
     return self;
 }
@@ -132,9 +135,10 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
     //in dictionaries all within an array
     NSArray *locations = [self getLocations:dbLocations];
     NSNumber *battery = [[NSNumber alloc]initWithFloat:[[UIDevice currentDevice] batteryLevel]];
+    NSString *rId = ([riderId length] == 0 ) ? @"TcH4FR09ROSA4b42WJX6i+SFbTpuzcr06gszd9lHA4c=" : riderId;//this is temporary until its integrated with sencha
     
     NSMutableDictionary *json = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                 @"TcH4FR09ROSA4b42WJX6i+SFbTpuzcr06gszd9lHA4c=", @"rider_id", //rider's id //hard coded for now
+                                 rId, @"rider_id", //rider's id //hard coded for now
                                  locations, @"locations",//locations array full of locations
                                  battery, @"battery",//current battery level
                                  nil];

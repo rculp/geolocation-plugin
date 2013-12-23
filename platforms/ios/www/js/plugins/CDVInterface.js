@@ -15,12 +15,13 @@ var successCallBackFunction,
         /**
          * Starts the plugin
          * Initializes the plugin with the following required
-         * parameters
+         * parameters. Add parameters into the array.
          *
          * @param- DCSUrl
+         * @param- startTime
+         * @param- endTime
          * @param- tourConfigId
          * @param- riderId
-         * @param- pushId
          **/
         start: function( callbackSuccess , callbackError ) {
             cordova.exec( callbackSuccess, callbackError, "CDVInterface", "start", [] );

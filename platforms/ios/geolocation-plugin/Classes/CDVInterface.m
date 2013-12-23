@@ -17,11 +17,8 @@
 @interface CDVInterface ()
 
 @property (nonatomic) int locCount;
-@property (nonatomic) NSString* DCSUrl;
-@property (nonatomic) NSString* tourConfigId;
-@property (nonatomic) NSString* riderId;
-@property (nonatomic) NSString* pushId;
-
+@property (nonatomic) NSString *DCSUrl, *tourConfigId, *riderId;
+@property (nonatomic) NSString *startTime, *endTime;
 
 
 /**
@@ -38,33 +35,43 @@
 
 @implementation CDVInterface
 @synthesize dbHelper, locTracking, connector;
-@synthesize DCSUrl, tourConfigId, riderId, pushId;
+@synthesize DCSUrl, startTime, endTime, tourConfigId, riderId;
 
 
 
 #pragma mark - Sencha Interface Functions
 -(void) start:(CDVInvokedUrlCommand *)command{
     
-    
+    //First check if we initilized already
     if(self.dbHelper == nil && self.locTracking == nil && self.connector == nil){
         [self initCDVInterface];
     }
     
+    
+    
+    
+    //Second get the args in the command
     CDVPluginResult* pluginResult = nil;
     NSString* javascript = nil;
     
     @try {
+        //The args we are expecting
         DCSUrl = [command.arguments objectAtIndex:0];
-        tourConfigId = [command.arguments objectAtIndex:1];
-        riderId = [command.arguments objectAtIndex:2];
-        pushId = [command.arguments objectAtIndex:3];
+        startTime = [command.arguments objectAtIndex:1];
+        endTime = [command.arguments objectAtIndex:2];
+        tourConfigId = [command.arguments objectAtIndex:3];
+        riderId = [command.arguments objectAtIndex:4];
         
-        if(DCSUrl != nil && tourConfigId != nil && riderId != nil && pushId != nil){
+        if(DCSUrl != nil
+           && startTime != nil
+           && endTime != nil
+           && tourConfigId != nil
+           && riderId != nil){
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             javascript = [pluginResult toSuccessCallbackString:command.callbackId];
             
-        }else{
-            DCSUrl = tourConfigId = riderId = pushId = @"";
+        }else{//If all the arguments are nil then set them to empty string
+            DCSUrl = startTime = endTime = tourConfigId = riderId = @"";
         }
     }
     @catch (NSException *exception) {
@@ -75,7 +82,7 @@
     }@finally {
         [self writeJavascript:javascript];
     }
-
+    
     
     
 }
@@ -95,10 +102,11 @@
     self.locTracking = [[BGLocationTracking alloc]initWithCDVInterface: self];
     
     //set up service connector
-    self.connector = [[ServiceConnector alloc]initWithParams:DCSUrl
+    self.connector = [[ServiceConnector alloc]initWithParams   :DCSUrl
+                                                               :startTime
+                                                               :endTime
                                                                :tourConfigId
-                                                               :riderId
-                                                               :pushId];
+                                                               :riderId];
     
     //Set Current Device Battery Monitoring in order to get Battery percentage
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];

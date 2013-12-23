@@ -32,9 +32,10 @@
  * json and command will have a size of 
  * one. The json will have the following:
  *      dcsUrl
+ *      startTime
+ *      endTime
  *      tourConfigId
  *      riderId
- *      pushId
  *
  *
  * @param - Json 
