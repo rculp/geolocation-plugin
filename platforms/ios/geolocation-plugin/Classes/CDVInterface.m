@@ -132,7 +132,7 @@
 #pragma mark - Utility Function
 
 -(void) checkDB{
-    if(self.locCount > 1){
+    if(self.locCount > 7){
         [self.connector postLocations:[self getAllLocations]];
         [self clearLocations];
     }

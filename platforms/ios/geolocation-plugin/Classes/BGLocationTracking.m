@@ -74,6 +74,8 @@
     if(!isTracking){
         [locationManager startUpdatingLocation];
         isTracking = true;
+        NSLog(@"iOS: RESUMED TRACKING");
+
     }
 }
 
@@ -81,6 +83,7 @@
     if(isTracking){
         [locationManager stopUpdatingLocation];
         isTracking = false;
+        NSLog(@"iOS: PAUSED TRACKING");
     }
 }
 
