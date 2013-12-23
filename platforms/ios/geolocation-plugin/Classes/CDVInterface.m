@@ -70,6 +70,9 @@
     //set up service connector
     self.connector = [[ServiceConnector alloc]initWithDCSParams:self.json];
     
+    //Set Current Device Battery Monitoring in order to get Battery percentage
+    [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
+    
 }
 
 #pragma mark - Interface functions
@@ -99,7 +102,7 @@
 #pragma mark - Utility Function
 
 -(void) checkDB{
-    if(self.locCount > 10){
+    if(self.locCount > 1){
         [self.connector postLocations:[self getAllLocations]];
         [self clearLocations];
     }
