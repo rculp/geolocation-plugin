@@ -41,7 +41,10 @@
  * values
  *
  **/
--(id) initWithDCSParams: (NSDictionary *)dict;
+-(id) initWithParams:(NSString *)vDCSUrl
+                       :(NSString *)vTourConfigId
+                       :(NSString *)vRiderId
+                       :(NSString *)vPushId;
 
 
 /**

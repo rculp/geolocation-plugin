@@ -15,7 +15,7 @@
 
 @property (nonatomic) NSData* receivedData;
 @property (nonatomic) CDVInterface *cordInterface;
-@property (nonatomic) NSString *dcsUrl, *tourConfigId, *riderId;
+@property (nonatomic) NSString *DCSUrl, *tourConfigId, *riderId, *pushId;
 
 
 
@@ -49,6 +49,7 @@
 
 
 @implementation ServiceConnector
+@synthesize DCSUrl, tourConfigId, riderId, pushId;
 
 /*
  * URL to the SERVER
@@ -58,14 +59,18 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
 
 #pragma mark - Init Function
 
--(id) initWithDCSParams:(NSDictionary *)dict{
+-(id) initWithParams:(NSString *)vDCSUrl
+                    :(NSString *)vTourConfigId
+                    :(NSString *)vRiderId
+                    :(NSString *)vPushId{
+    
     self = [super init];
     if(self){
-        NSString *serverPath = [dict objectForKey:@"dcsUrl"];
         
-        self.dcsUrl = [serverPath stringByAppendingString:SERVER_LOCATION_UPDATE_URL];
-        self.tourConfigId = [dict objectForKey:@"tourConfigId"];
-        self.riderId = [dict objectForKey:@"riderId"];
+        self.DCSUrl = vDCSUrl;
+        self.tourConfigId = vTourConfigId;
+        self.riderId = vRiderId;
+        self.pushId = vPushId;
     }
     return self;
 }
@@ -129,7 +134,7 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
     NSNumber *battery = [[NSNumber alloc]initWithFloat:[[UIDevice currentDevice] batteryLevel]];
     
     NSMutableDictionary *json = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                 @"TcH4FR09ROSA4b42WJX6i2VXlpCjMFnGAycWAj+XSH8=", @"rider_id", //rider's id //hard coded for now
+                                 @"TcH4FR09ROSA4b42WJX6i+SFbTpuzcr06gszd9lHA4c=", @"rider_id", //rider's id //hard coded for now
                                  locations, @"locations",//locations array full of locations
                                  battery, @"battery",//current battery level
                                  nil];

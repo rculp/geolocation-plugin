@@ -16,8 +16,13 @@
 
 @interface CDVInterface ()
 
-@property (strong, nonatomic) NSDictionary *json;
 @property (nonatomic) int locCount;
+@property (nonatomic) NSString* DCSUrl;
+@property (nonatomic) NSString* tourConfigId;
+@property (nonatomic) NSString* riderId;
+@property (nonatomic) NSString* pushId;
+
+
 
 /**
  * This is a temp function
@@ -33,29 +38,51 @@
 
 @implementation CDVInterface
 @synthesize dbHelper, locTracking, connector;
+@synthesize DCSUrl, tourConfigId, riderId, pushId;
 
 
 
-#pragma mark - start function
--(void) startUpdatingLocation:(CDVInvokedUrlCommand *)command{
+#pragma mark - Sencha Interface Functions
+-(void) start:(CDVInvokedUrlCommand *)command{
     
     
     if(self.dbHelper == nil && self.locTracking == nil && self.connector == nil){
         [self initCDVInterface];
     }
-    /*NSError* error;
     
-    /* NSData *jsonData = [NSKeyedArchiver
-                    archivedDataWithRootObject:command];
+    CDVPluginResult* pluginResult = nil;
+    NSString* javascript = nil;
     
-    //Get the json here
-    self.json = [NSJSONSerialization
-                 JSONObjectWithData:jsonData
-                 options:kNilOptions
-                 error:&error];*/
+    @try {
+        DCSUrl = [command.arguments objectAtIndex:0];
+        tourConfigId = [command.arguments objectAtIndex:1];
+        riderId = [command.arguments objectAtIndex:2];
+        pushId = [command.arguments objectAtIndex:3];
+        
+        if(DCSUrl != nil && tourConfigId != nil && riderId != nil && pushId != nil){
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            javascript = [pluginResult toSuccessCallbackString:command.callbackId];
+            
+        }else{
+            DCSUrl = tourConfigId = riderId = pushId = @"";
+        }
+    }
+    @catch (NSException *exception) {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_JSON_EXCEPTION
+                                         messageAsString:[exception reason]];
+        javascript = [pluginResult toErrorCallbackString:command.callbackId];
+        
+    }@finally {
+        [self writeJavascript:javascript];
+    }
+
     
     
 }
+
+-(void) resumeTracking:(CDVInvokedUrlCommand *)command{ [self.locTracking resumeTracking]; }
+
+-(void) pauseTracking:(CDVInvokedUrlCommand *)command{ [self.locTracking pauseTracking]; }
 
 
 #pragma mark - Initialize
@@ -68,14 +95,17 @@
     self.locTracking = [[BGLocationTracking alloc]initWithCDVInterface: self];
     
     //set up service connector
-    self.connector = [[ServiceConnector alloc]initWithDCSParams:self.json];
+    self.connector = [[ServiceConnector alloc]initWithParams:DCSUrl
+                                                               :tourConfigId
+                                                               :riderId
+                                                               :pushId];
     
     //Set Current Device Battery Monitoring in order to get Battery percentage
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
     
 }
 
-#pragma mark - Interface functions
+#pragma mark - Module Interface functions
 -(void) insertCurrLocation:(CLLocation *)location{
     
     //statically send location to server here

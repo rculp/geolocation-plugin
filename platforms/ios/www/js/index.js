@@ -35,9 +35,8 @@ bindEvents: function() {
     // function, we must explicity call 'app.receivedEvent(...);'
 onDeviceReady: function() {
     app.receivedEvent('deviceready');
-    //Start Getting Location
-    CDVInterface.startUpdatingLocation( app.yourCallback, app.yourErrorCallback );
-    //Start the plugin here
+    //Start plugin here
+    CDVInterface.start( app.yourCallback, app.yourErrorCallback );
 },
     
 yourCallback: function(){
