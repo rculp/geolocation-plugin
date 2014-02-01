@@ -14,6 +14,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "LocationUpdates.h"
 
 
 /**
@@ -32,6 +33,22 @@
 
 @property (strong,nonatomic) id <ServiceConnectorDelegate> delegate;
 
+/**
+ * Initialize the ServiceConnector with
+ * the parameters needed to post to
+ * the DCS Server
+ * @param - DCSUrl
+ * @param - Start Time
+ * @param - End Time
+ * @param - Tour Configuration ID
+ * @param - Rider's ID
+ *
+ **/
+-(id) initWithParams:(NSString *)vDCSUrl
+                    :(NSString *)vStartTime
+                    :(NSString *)vEndTime
+                    :(NSString *)vTourConfigId
+                    :(NSString *)vRiderId;
 
 /**
  * Post the Location to the Server
@@ -71,6 +88,6 @@
  * }
  * @param- the Location or Rider
  **/
--(void)postLocations: (CLLocation *)location;
+-(void)postLocations: (NSArray *)dbLocations;
 
 @end

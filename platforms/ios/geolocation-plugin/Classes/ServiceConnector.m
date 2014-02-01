@@ -13,8 +13,9 @@
 @interface ServiceConnector()
 
 @property (nonatomic) NSData* receivedData;
-
 @property (nonatomic) CDVInterface *cordInterface;
+@property (nonatomic) NSString *DCSUrl, *tourConfigId, *riderId, *pushId;
+@property (nonatomic) NSString *startTime, *endTime;
 
 
 
@@ -47,60 +48,55 @@
 
 
 @implementation ServiceConnector
+@synthesize DCSUrl, startTime, endTime, tourConfigId, riderId;
 
 /*
  * URL to the SERVER
  *
  */
-static NSString *SERVER_LOCATION_UPDATE_URL = @"http://devcycle.se.rit.edu/location_update/";
+static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
 
+#pragma mark - Init Function
+
+-(id) initWithParams:(NSString *)vDCSUrl
+                    :(NSString *)vStartTime
+                    :(NSString *)vEndTime
+                    :(NSString *)vTourConfigId
+                    :(NSString *)vRiderId{
+    
+    self = [super init];
+    if(self){
+        
+        self.DCSUrl = vDCSUrl;
+        self.startTime = vStartTime;
+        self.endTime = vEndTime;
+        self.tourConfigId = vTourConfigId;
+        self.riderId = vRiderId;
+    }
+    return self;
+}
 
 #pragma mark - Utility Functions
 
--(NSDictionary*)getDict:(CLLocation *)loc{
+-(NSDictionary*)getDict:(LocationUpdates *)loc{
     
-    NSNumber *latitude, *longitude, *speed, *accuracy;
-
-    //the date and time string in proper
-    //format
-    NSString *dateStr = [NSDateFormatter
-                         localizedStringFromDate:loc.timestamp
-                         dateStyle:NSDateFormatterShortStyle
-                         timeStyle:NSDateFormatterFullStyle];
-    
-    
-    //battery format
-    float batteryLevel = [[UIDevice currentDevice] batteryLevel];
-    
-    //To avoid run time error must check if any of the CLLocation attributes
-    //is nil. If nil then set to Null.
-    
-    //latitude
-    (loc.coordinate.latitude == 0.0 ? [NSNull null] : [[NSNumber alloc]initWithDouble:loc.coordinate.latitude]);
-    
-    //longitude
-    (loc.coordinate.longitude == 0.0 ? [NSNull null] : [[NSNumber alloc]initWithDouble:loc.coordinate.longitude]);
-    
-    //speed
-    (loc.speed == 0.0 ? [NSNull null] : [[NSNumber alloc]initWithDouble:loc.speed]);
-    
-    //accuracy
-    (loc.horizontalAccuracy == 0.0 ? [NSNull null] : [[NSNumber alloc]initWithDouble:loc.horizontalAccuracy]);
     
     //dictionaryWithObjectsAndKeys takes the values first
     //then the keys
     NSDictionary *locDic = [[NSDictionary alloc] initWithObjectsAndKeys:
-                            dateStr, @"time",
-                            batteryLevel,  @"battery",
-                            latitude.doubleValue, @"latitude",
-                            longitude.doubleValue, @"longitude",
-                            speed.doubleValue, @"speed",
-                            accuracy.doubleValue, @"accuracy",
-                            [NSNull null], @"bearing", //will get this from the locaiton stored in db
-                            [NSNull null], @"provider",
+                            loc.time, @"time",
+                            loc.latitude, @"latitude",
+                            loc.longitude, @"longitude",
+                            loc.speed, @"speed",
+                            loc.accuracy, @"accuracy",
+                            loc.bearing, @"bearing", //will get this from the locaiton stored in db
+                            loc.provider, @"provider",
                             nil];
     
     return locDic;
+    
+    
+    
     
     
     
@@ -134,29 +130,49 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"http://devcycle.se.rit.edu/locat
 #pragma mark - Post
 
 -(void)postLocations:(NSArray *)dbLocations{
-    //build up request url
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:
-                                    [NSURL URLWithString:SERVER_LOCATION_UPDATE_URL]];
-    //add Method
-    [request setHTTPMethod:@"POST"];
+    
     
     //get all the locations in the proper format
     //in dictionaries all within an array
     NSArray *locations = [self getLocations:dbLocations];
+    NSNumber *battery = [[NSNumber alloc]initWithFloat:[[UIDevice currentDevice] batteryLevel]];
+    NSString *rId = ([riderId length] == 0 ) ? @"TcH4FR09ROSA4b42WJX6i+SFbTpuzcr06gszd9lHA4c=" : riderId;//this is temporary until its integrated with sencha
     
     NSMutableDictionary *json = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                 @"1", @"rider_id", //rider's id
-                                 locations, @"locations", //locations array full of locations
-                                 [[UIDevice currentDevice] batteryLevel], @"battery", //current battery level
+                                 rId, @"rider_id", //rider's id //hard coded for now
+                                 locations, @"locations",//locations array full of locations
+                                 battery, @"battery",//current battery level
                                  nil];
     
-    
     NSError *writeError = nil;
+    
     //serialize the dictionary into json
     NSData *data = [NSJSONSerialization dataWithJSONObject:json options:NSJSONWritingPrettyPrinted error:&writeError];
     
+    if(!data){
+        NSLog(@"Got an Error: %@", writeError);
+    }else{
+        NSString *jsonStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"The JSON: %@", jsonStr);
+        
+    }
+    
+    
+    //build up request url
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:
+                                    [NSURL URLWithString:@"http://devcycle.se.rit.edu/location_update/"]];//must update
+    //add Method
+    [request setHTTPMethod:@"POST"];
+    
     //set data as the POST body
     [request setHTTPBody:data];
+    
+    //set the content type to JSON
+    [request setValue:@"application/json; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //set accept
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
     
     //add Value to the header
     [request addValue:[NSString stringWithFormat:@"%d",data.length] forHTTPHeaderField:@"Content-Length"];
@@ -165,6 +181,7 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"http://devcycle.se.rit.edu/locat
     if(!connection){
         NSLog(@"Connection Failed");
     }
+
     
 }
 

@@ -24,4 +24,15 @@
  **/
 -(id) initWithCDVInterface: (CDVInterface *)cordova;
 
+/**
+ * Resume Tracking
+ *
+ **/
+-(void) resumeTracking;
+
+/**
+ * Pause Tracking
+ *
+ **/
+-(void) pauseTracking;
 @end

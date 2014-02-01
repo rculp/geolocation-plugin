@@ -12,7 +12,7 @@ var successCallBackFunction,
     errorCallBackName = 'yourErrorCallBack',
     CDVInterface = {
     
-startUpdatingLocation: function( callbackSuccess , callbackError ) {
+start: function( callbackSuccess , callbackError ) {
     if ( typeof callbackSuccess === 'function' ) {
         
         if ( callbackSuccess.name === '' ) {
@@ -30,14 +30,18 @@ startUpdatingLocation: function( callbackSuccess , callbackError ) {
             }
         }
         
-        cordova.exec( null, callbackError, "CDVInterface", "startUpdatingLocation", [successCallBackName, errorCallBackName] );
+        cordova.exec( null, callbackError, "CDVInterface", "start", [] );
     } else {
         callbackError.call({ message: 'invalid signature of the success callback function' });
     }
 },
+        
+resume: function(callbackSuccess, callbackError){
+    cordova.exec( callbackStop, callbackError, "CDVInterface", "start", [] );
+},
     
-stopUpdatingLocation: function( callbackStop, callbackError ) {
-    cordova.exec( callbackStop, callbackError, "CDVInterface", "stopUpdatingLocation", [] );
+pause: function( callbackStop, callbackError ) {
+    cordova.exec( callbackStop, callbackError, "CDVInterface", "pause", [] );
 }
     
 };
