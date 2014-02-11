@@ -50,7 +50,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     if ([newLocation distanceFromLocation:oldLocation] >= MINIMUM_DISTANCE_BETWEEN_DIFFERENT_LOCATIONS) {
-        NSLog(@"%@", [newLocation description]);
+        //NSLog(@"%@", [newLocation description]);
         [self.cordInterface insertCurrLocation:(newLocation)];
     }
     

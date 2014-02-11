@@ -30,14 +30,21 @@ start: function( callbackSuccess , callbackError ) {
             }
         }
         
-        cordova.exec( null, callbackError, "CDVInterface", "start", [] );
+        cordova.exec( null, callbackError, "CDVInterface", "start", [{
+                                                                         "dcsUrl": "http:// devcycle.se.rit.edu",
+                                                                         "startTime": 1386525600,
+                                                                         "endTime": 1389114000,
+                                                                         "tourId": "toffer", 
+                                                                         "riderId": "id"
+                                                                     }]
+        );
     } else {
         callbackError.call({ message: 'invalid signature of the success callback function' });
     }
 },
         
 resume: function(callbackSuccess, callbackError){
-    cordova.exec( callbackStop, callbackError, "CDVInterface", "start", [] );
+    cordova.exec( callbackStop, callbackError, "CDVInterface", "resume", [] );
 },
     
 pause: function( callbackStop, callbackError ) {

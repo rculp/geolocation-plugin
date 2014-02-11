@@ -153,7 +153,7 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
         NSLog(@"Got an Error: %@", writeError);
     }else{
         NSString *jsonStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"The JSON: %@", jsonStr);
+        //NSLog(@"The JSON: %@", jsonStr);
         
     }
     
@@ -192,7 +192,7 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                          options:NSJSONReadingMutableContainers
                                                            error:&error];
-    NSLog(@"The Server Returned: %@", json);
+    //NSLog(@"The Server Returned: %@", json);
 }
 
 
@@ -217,7 +217,7 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:_receivedData
                                                          options:NSJSONReadingMutableContainers
                                                            error:&error];
-    NSLog(@"The Server Returned: %@", json);
+    //NSLog(@"The Server Returned: %@", json);
 
     
     //send the data to the delegate

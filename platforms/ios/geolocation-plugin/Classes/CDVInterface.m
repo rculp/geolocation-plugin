@@ -82,53 +82,10 @@
 }
 
 
-#pragma mark - Timer Schedulings
--(void)scheduleStartEndTime{
-
-    
-    //Set up the formatter we will be using
-    NSDateFormatter *f = [[NSDateFormatter alloc]init];
-    [f setLocale:[NSLocale currentLocale]];
-    [f setDateFormat:@"dd.MM.yyyy"];
-    
-    //Convert the start time to NSDate
-    NSTimeInterval startInterval = [startTime doubleValue];
-    NSDate *startDate = [NSDate dateWithTimeIntervalSince1970: startInterval];//proper conversion from unixtimestamp
-    
-    //Convert the end time to NSDate
-    NSTimeInterval endInterval = [endTime doubleValue];
-    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970: endInterval]; //proper conversion from unixtimestamp
-    
-    //Set the Fire Date for the Start Timer
-    startTimer = [[NSTimer alloc]initWithFireDate:startDate
-                                         interval:0.0
-                                         target:self
-                                         selector:@selector(runStartTimeTask)
-                                         userInfo:self
-                                         repeats:NO];
-    
-    //Set the Fire Date for the End Timer
-    endTimer = [[NSTimer alloc]initWithFireDate:endDate
-                                       interval:0.0
-                                       target:self
-                                       selector:@selector(runEndTimeTask)
-                                       userInfo:self
-                                       repeats:NO];
-    
-    
-}
-
--(void)runStartTimeTask{}
-
--(void)runEndTimeTask{}
-
-
-
-
 #pragma mark - Sencha Interface Functions
 -(void) start:(CDVInvokedUrlCommand *)command{
     
-    NSString *vStartTime, *vEndTime;
+    //NSString *vStartTime, *vEndTime;
     
     //First check if we are already initialized
     if(self.dbHelper == nil && self.locTracking == nil && self.connector == nil){
@@ -142,12 +99,11 @@
     @try {
         //The args we are expecting
         DCSUrl = [[command.arguments objectAtIndex:0]  objectForKey:@"dcsUrl"];
-        vStartTime = [[command.arguments objectAtIndex:0]  objectForKey:@"startTime"];
-        vEndTime = [[command.arguments objectAtIndex:0]  objectForKey:@"endTime"];
+        startTime = [[command.arguments objectAtIndex:0]  objectForKey:@"startTime"];
+        endTime = [[command.arguments objectAtIndex:0]  objectForKey:@"endTime"];
         tourConfigId = [[command.arguments objectAtIndex:0]  objectForKey:@"tourId"];
         riderId = [[command.arguments objectAtIndex:0]  objectForKey:@"riderId"];
 
-        
         if(DCSUrl != nil
            && startTime != nil
            && endTime != nil
@@ -156,15 +112,10 @@
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             javascript = [pluginResult toSuccessCallbackString:command.callbackId];
             
-            //convert start time from string to long (Unix Time Stamp)
-            NSNumberFormatter * f = [[NSNumberFormatter alloc]init];
-            [f setNumberStyle: NSNumberFormatterDecimalStyle];
-            startTime = [f numberFromString:vStartTime];
-            endTime = [f numberFromString:vEndTime];
             
-            
-            
-            
+            //Schedule the Automatic Start/End Timers
+            [self scheduleStartEndTime];
+        
         }else{//If all the arguments are nil then set them to empty string
             DCSUrl = tourConfigId = riderId = @"";
             startTime = endTime = 0;
@@ -185,6 +136,62 @@
 -(void) resume:(CDVInvokedUrlCommand *)command{ [self.locTracking resumeTracking]; }
 
 -(void) pause:(CDVInvokedUrlCommand *)command{ [self.locTracking pauseTracking]; }
+
+
+#pragma mark - Timer Schedulings
+-(void)scheduleStartEndTime{
+    
+    
+    //Set up the formatter we will be using
+    NSDateFormatter *f = [[NSDateFormatter alloc]init];
+    [f setLocale:[NSLocale currentLocale]];
+    [f setDateFormat:@"dd.MM.yyyy"];
+    
+    //Convert the start time to NSDate
+    NSTimeInterval startInterval = [startTime doubleValue];
+    NSDate *startDate = [NSDate dateWithTimeIntervalSince1970: startInterval];//proper conversion from unixtimestamp
+    
+    //Convert the end time to NSDate
+    NSTimeInterval endInterval = [endTime doubleValue];
+    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970: endInterval]; //proper conversion from unixtimestamp
+    
+    //Set the Fire Date for the Start Timer
+    startTimer = [[NSTimer alloc]initWithFireDate:startDate
+                                         interval:0.0
+                                           target:self
+                                         selector:@selector(runStartTimeTask)
+                                         userInfo:self
+                                          repeats:NO];
+    
+    //Set the Fire Date for the End Timer
+    endTimer = [[NSTimer alloc]initWithFireDate:endDate
+                                       interval:0.0
+                                         target:self
+                                       selector:@selector(runEndTimeTask)
+                                       userInfo:self
+                                        repeats:NO];
+    
+    //Need to add Timers to main Loop
+    //in order for it execute
+    [[NSRunLoop currentRunLoop] addTimer:startTimer forMode:NSRunLoopCommonModes];
+    [[NSRunLoop currentRunLoop] addTimer:endTimer forMode:NSRunLoopCommonModes];
+
+   
+    
+    
+    
+}
+
+-(void)runStartTimeTask{
+    NSLog(@"RUNNNING START TIME TASK");
+}
+
+-(void)runEndTimeTask{
+    NSLog(@"RUNNNING END TIME TASK");
+}
+
+
+
 
 
 #pragma mark - Sub Module Interface functions
