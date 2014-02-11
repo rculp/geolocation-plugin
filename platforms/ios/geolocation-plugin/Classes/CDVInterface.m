@@ -85,8 +85,6 @@
 #pragma mark - Sencha Interface Functions
 -(void) start:(CDVInvokedUrlCommand *)command{
     
-    //NSString *vStartTime, *vEndTime;
-    
     //First check if we are already initialized
     if(self.dbHelper == nil && self.locTracking == nil && self.connector == nil){
         [self initCDVInterface];
