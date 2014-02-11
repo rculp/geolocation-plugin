@@ -147,43 +147,45 @@
     //Grab context
     NSManagedObjectContext *context = [self managedObjectContext];
     
-    NSString *dateStr = [NSDateFormatter
-                         localizedStringFromDate:location.timestamp
-                         dateStyle:NSDateFormatterShortStyle
-                         timeStyle:NSDateFormatterFullStyle];
     //Grab LocationUpdates Entity
     LocationUpdates *loc = [NSEntityDescription insertNewObjectForEntityForName:@"LocationUpdates" inManagedObjectContext:context];
     
-    //set time
-    loc.time = [NSString stringWithFormat:@"%@", dateStr];
+    //Grab device battery level and set it.
+    loc.battery = [[NSNumber alloc]initWithFloat:[[UIDevice currentDevice] batteryLevel]];
+    
+    //set time - unix time since epoch in ms
+    NSNumber *epochInMs = [[NSNumber alloc]initWithLongLong:(location.timestamp.timeIntervalSince1970 * 1000)];
+    loc.time = epochInMs;
     
     //set latitude
-    loc.latitude = [NSString stringWithFormat:@"%g", location.coordinate.latitude];
+    loc.latitude = [[NSNumber alloc]initWithDouble:location.coordinate.latitude];
     
     //set latitude
-    loc.longitude = [NSString stringWithFormat:@"%g", location.coordinate.longitude];
+    loc.longitude = [[NSNumber alloc]initWithDouble:location.coordinate.longitude];
     
     //set speed
-    loc.speed = [NSString stringWithFormat:@"%g", location.speed];
-    
-    //set battery
-    float batteryLevel = [[UIDevice currentDevice] batteryLevel];
-    loc.battery = [NSString stringWithFormat:@"%g", batteryLevel];
+    loc.speed = [[NSNumber alloc]initWithDouble:location.speed];
     
     //set accuracy
-    loc.accuracy = [NSString stringWithFormat:@"%g", location.horizontalAccuracy];
+    loc.accuracy = [[NSNumber alloc]initWithDouble:location.horizontalAccuracy];
     
     //set bearing
-    loc.bearing = [NSString stringWithFormat:@"%g", [self getBearing]];
+    loc.bearing = [[NSNumber alloc]initWithFloat:[self getBearing]];
     
-    //set provider
-    loc.provider = @"NO PROVIDER";
+    // set provider
+    // altitude is undefned if it doesn't have GPS lock
+    if (location.altitude < 0){
+        loc.provider = @"NETWORK";
+    } else {
+        loc.provider = @"GPS";
+    }
     
     NSError *error;
     if(![context save:&error]){
         NSLog(@"Failed to save - error: %@", [error localizedDescription]);
     }
     
+
 }
     
 #pragma mark -
