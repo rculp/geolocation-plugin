@@ -173,19 +173,12 @@
     //in order for it execute
     [[NSRunLoop currentRunLoop] addTimer:startTimer forMode:NSRunLoopCommonModes];
     [[NSRunLoop currentRunLoop] addTimer:endTimer forMode:NSRunLoopCommonModes];
-
-   
-    
-    
     
 }
 
 -(void)runStartTimeTask{[self.locTracking resumeTracking];/*starts tracking*/}
 
 -(void)runEndTimeTask{[self.locTracking pauseTracking];/*stops tracking*/}
-
-
-
 
 
 #pragma mark - Sub Module Interface functions
