@@ -41,8 +41,7 @@
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
         locationManager.distanceFilter = DISTANCE_FILTER_IN_METERS;
         locationManager.activityType = CLActivityTypeFitness;
-        [locationManager startUpdatingLocation];
-        isTracking=true;
+        isTracking=false;
     }
     return self;
 }

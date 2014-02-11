@@ -180,13 +180,9 @@
     
 }
 
--(void)runStartTimeTask{
-    NSLog(@"RUNNNING START TIME TASK");
-}
+-(void)runStartTimeTask{[self.locTracking resumeTracking];/*starts tracking*/}
 
--(void)runEndTimeTask{
-    NSLog(@"RUNNNING END TIME TASK");
-}
+-(void)runEndTimeTask{[self.locTracking pauseTracking];/*stops tracking*/}
 
 
 
