@@ -22,6 +22,18 @@
 @property (retain, nonatomic) BGLocationTracking *locTracking;
 @property (retain, nonatomic) ServiceConnector *connector;
 
+#pragma-
+#pragma mark - Initialize Functions
+
+
+/**
+ * Set-up the Automatic start
+ * and end time for the current
+ * race.
+ *
+ **/
+- (void)scheduleStartEndTime;
+
 
 #pragma-
 #pragma mark - Sencha interface functions

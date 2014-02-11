@@ -14,7 +14,17 @@
 
 @property (nonatomic) int locCount;
 @property (nonatomic) NSString *DCSUrl, *tourConfigId, *riderId;
-@property (nonatomic) NSString *startTime, *endTime;
+@property (nonatomic) NSNumber *startTime, *endTime;
+@property (nonatomic, retain) NSTimer *startTimer, *endTimer;
+
+
+/**
+ * Initialize
+ * the sub-components
+ * to the system. Called
+ * by the start function
+ **/
+- (void)initCDVInterface;
 
 /**
  * This is a temp function
@@ -23,7 +33,22 @@
  * in the db.
  *
  **/
--(void) checkDB;
+- (void)checkDB;
+
+/**
+ * The task to be run
+ * when we hit the automatic
+ * start time for the race
+ *
+ **/
+- (void)runStartTimeTask;
+
+/**
+ * The task to be run
+ * when we hit the automatic
+ * end time for the race
+ **/
+- (void)runEndTimeTask;
 
 @end
 
@@ -31,6 +56,7 @@
 @implementation CDVInterface
 @synthesize dbHelper, locTracking, connector;
 @synthesize DCSUrl, startTime, endTime, tourConfigId, riderId;
+@synthesize startTimer, endTimer;
 
 
 #pragma mark - Initialize
@@ -56,8 +82,53 @@
 }
 
 
+#pragma mark - Timer Schedulings
+-(void)scheduleStartEndTime{
+
+    
+    //Set up the formatter we will be using
+    NSDateFormatter *f = [[NSDateFormatter alloc]init];
+    [f setLocale:[NSLocale currentLocale]];
+    [f setDateFormat:@"dd.MM.yyyy"];
+    
+    //Convert the start time to NSDate
+    NSTimeInterval startInterval = [startTime doubleValue];
+    NSDate *startDate = [NSDate dateWithTimeIntervalSince1970: startInterval];//proper conversion from unixtimestamp
+    
+    //Convert the end time to NSDate
+    NSTimeInterval endInterval = [endTime doubleValue];
+    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970: endInterval]; //proper conversion from unixtimestamp
+    
+    //Set the Fire Date for the Start Timer
+    startTimer = [[NSTimer alloc]initWithFireDate:startDate
+                                         interval:0.0
+                                         target:self
+                                         selector:@selector(runStartTimeTask)
+                                         userInfo:self
+                                         repeats:NO];
+    
+    //Set the Fire Date for the End Timer
+    endTimer = [[NSTimer alloc]initWithFireDate:endDate
+                                       interval:0.0
+                                       target:self
+                                       selector:@selector(runEndTimeTask)
+                                       userInfo:self
+                                       repeats:NO];
+    
+    
+}
+
+-(void)runStartTimeTask{}
+
+-(void)runEndTimeTask{}
+
+
+
+
 #pragma mark - Sencha Interface Functions
 -(void) start:(CDVInvokedUrlCommand *)command{
+    
+    NSString *vStartTime, *vEndTime;
     
     //First check if we are already initialized
     if(self.dbHelper == nil && self.locTracking == nil && self.connector == nil){
@@ -71,8 +142,8 @@
     @try {
         //The args we are expecting
         DCSUrl = [[command.arguments objectAtIndex:0]  objectForKey:@"dcsUrl"];
-        startTime = [[command.arguments objectAtIndex:0]  objectForKey:@"startTime"];
-        endTime = [[command.arguments objectAtIndex:0]  objectForKey:@"endTime"];
+        vStartTime = [[command.arguments objectAtIndex:0]  objectForKey:@"startTime"];
+        vEndTime = [[command.arguments objectAtIndex:0]  objectForKey:@"endTime"];
         tourConfigId = [[command.arguments objectAtIndex:0]  objectForKey:@"tourId"];
         riderId = [[command.arguments objectAtIndex:0]  objectForKey:@"riderId"];
 
@@ -85,8 +156,18 @@
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             javascript = [pluginResult toSuccessCallbackString:command.callbackId];
             
+            //convert start time from string to long (Unix Time Stamp)
+            NSNumberFormatter * f = [[NSNumberFormatter alloc]init];
+            [f setNumberStyle: NSNumberFormatterDecimalStyle];
+            startTime = [f numberFromString:vStartTime];
+            endTime = [f numberFromString:vEndTime];
+            
+            
+            
+            
         }else{//If all the arguments are nil then set them to empty string
-            DCSUrl = startTime = endTime = tourConfigId = riderId = @"";
+            DCSUrl = tourConfigId = riderId = @"";
+            startTime = endTime = 0;
         }
     }
     @catch (NSException *exception) {
@@ -106,7 +187,7 @@
 -(void) pause:(CDVInvokedUrlCommand *)command{ [self.locTracking pauseTracking]; }
 
 
-#pragma mark - Module Interface functions
+#pragma mark - Sub Module Interface functions
 -(void) insertCurrLocation:(CLLocation *)location{
 
     self.locCount++;

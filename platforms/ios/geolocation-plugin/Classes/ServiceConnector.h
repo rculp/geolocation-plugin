@@ -45,8 +45,8 @@
  *
  **/
 -(id) initWithParams:(NSString *)vDCSUrl
-                    :(NSString *)vStartTime
-                    :(NSString *)vEndTime
+                    :(NSNumber *)vStartTime
+                    :(NSNumber *)vEndTime
                     :(NSString *)vTourConfigId
                     :(NSString *)vRiderId;
 

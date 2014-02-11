@@ -15,7 +15,7 @@
 @property (nonatomic) NSData* receivedData;
 @property (nonatomic) CDVInterface *cordInterface;
 @property (nonatomic) NSString *DCSUrl, *tourConfigId, *riderId, *pushId;
-@property (nonatomic) NSString *startTime, *endTime;
+@property (nonatomic) NSNumber *startTime, *endTime;
 
 
 
@@ -59,8 +59,8 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
 #pragma mark - Init Function
 
 -(id) initWithParams:(NSString *)vDCSUrl
-                    :(NSString *)vStartTime
-                    :(NSString *)vEndTime
+                    :(NSNumber *)vStartTime
+                    :(NSNumber *)vEndTime
                     :(NSString *)vTourConfigId
                     :(NSString *)vRiderId{
     
