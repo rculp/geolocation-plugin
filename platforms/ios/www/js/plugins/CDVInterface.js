@@ -43,12 +43,12 @@ start: function( callbackSuccess , callbackError ) {
     }
 },
         
-resume: function(callbackSuccess, callbackError){
-    cordova.exec( callbackStop, callbackError, "CDVInterface", "resume", [] );
+resumeTracking: function(callbackSuccess, callbackError){
+    cordova.exec( callbackStop, callbackError, "CDVInterface", "resumeTracking", [] );
 },
     
-pause: function( callbackStop, callbackError ) {
-    cordova.exec( callbackStop, callbackError, "CDVInterface", "pause", [] );
+pauseTracking: function( callbackStop, callbackError ) {
+    cordova.exec( callbackStop, callbackError, "CDVInterface", "pauseTracking", [] );
 }
     
 };

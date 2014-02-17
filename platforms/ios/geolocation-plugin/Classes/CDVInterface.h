@@ -59,14 +59,14 @@
  * tracking has been paused
  *
  **/
-- (void)resume:(CDVInvokedUrlCommand *)command;
+- (void)resumeTracking:(CDVInvokedUrlCommand *)command;
 
 /**
  * Pause Tracking assuming,
  * tracking has started or resumed
  *
  **/
-- (void)pause:(CDVInvokedUrlCommand *)command;
+- (void)pauseTracking:(CDVInvokedUrlCommand *)command;
 
 
 #pragma-
