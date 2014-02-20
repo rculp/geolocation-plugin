@@ -31,11 +31,11 @@ start: function( callbackSuccess , callbackError ) {
         }
         
         cordova.exec( null, callbackError, "CDVInterface", "start", [{
-                                                                         "dcsUrl": "http:// devcycle.se.rit.edu",
-                                                                         "startTime": 1386525600,
-                                                                         "endTime": 1389114000,
-                                                                         "tourId": "toffer", 
-                                                                         "riderId": "id"
+                                                                         "dcsUrl": "http://cycl-ops.se.rit.edu/",
+                                                                         "startTime": 1391526000,
+                                                                         "endTime": 11398434400,
+                                                                         "tourId": "sussex",
+                                                                         "riderId": ""
                                                                      }]
         );
     } else {

@@ -30,6 +30,14 @@
         <param name="ios-package" value="CDVInterface" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="startTracking">
+        <param name="ios-package" value="startTracking" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="pauseTracking">
+        <param name="ios-package" value="pauseTracking" />
+        <param name="onload" value="true" />
+    </feature>
     <author email="dev@callback.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
