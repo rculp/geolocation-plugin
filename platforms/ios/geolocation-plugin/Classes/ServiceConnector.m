@@ -137,11 +137,13 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
     NSArray *locations = [self getLocations:dbLocations];
     NSNumber *battery = [[NSNumber alloc]initWithFloat:[[UIDevice currentDevice] batteryLevel]];
     NSString *rId = ([riderId length] == 0 ) ? @"TcH4FR09ROSA4b42WJX6i+SFbTpuzcr06gszd9lHA4c=" : riderId;//this is temporary until its integrated with sencha
+    //NSString *rId = @"";
     
     NSMutableDictionary *json = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                  rId, @"rider_id", //rider's id //hard coded for now
                                  locations, @"locations",//locations array full of locations
                                  battery, @"battery",//current battery level
+                                 //tourConfigId, @"tour_id",
                                  nil];
     
     NSError *writeError = nil;
@@ -160,7 +162,7 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
     
     //build up request url
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:
-                                    [NSURL URLWithString:@"http://devcycle.se.rit.edu/location_update/"]];//must update
+                                    [NSURL URLWithString:@"http://cycl-ops.se.rit.edu/location_update/"]];//must update
     //add Method
     [request setHTTPMethod:@"POST"];
     
@@ -192,7 +194,7 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                          options:NSJSONReadingMutableContainers
                                                            error:&error];
-    //NSLog(@"The Server Returned: %@", json);
+    NSLog(@"The Server Returned: %@", json);
 }
 
 
@@ -217,7 +219,7 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:_receivedData
                                                          options:NSJSONReadingMutableContainers
                                                            error:&error];
-    //NSLog(@"The Server Returned: %@", json);
+    NSLog(@"The Server Returned: %@", json);
 
     
     //send the data to the delegate

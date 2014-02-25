@@ -27,6 +27,8 @@
                 <param name="ios-package" value="CDVInterface" />
             </feature>
         </config-file>
+        
+    
 
         <!-- CONTROLLER -->
 
