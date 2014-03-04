@@ -116,7 +116,7 @@
         [self initCDVInterface];
     }
     
-    self.pollingRate = 600000;//default polling rate 600000ms
+    self.pollingRate = 600;//default polling rate 600seconds = 10min
 
     //Second get the args in the command
     CDVPluginResult* pluginResult = nil;
