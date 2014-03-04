@@ -142,9 +142,10 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
 
 -(BOOL)isPollingRateChange:(NSDictionary *)json{
     //Get the value at the polling rate
-    int poll_rate = [json objectForKey:@"polling_rate"];
-    if(poll_rate != self.cdvInterface.pollingRate){
-        [self.cdvInterface updatePollingRate:poll_rate];
+    NSNumber* nPollRate = [json objectForKey:@"polling_rate"];
+    int pollRate = [nPollRate intValue];
+    if(pollRate != self.cdvInterface.pollingRate){
+        [self.cdvInterface updatePollingRate:pollRate];
         return TRUE;
     }
     return FALSE;
@@ -160,13 +161,12 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
     NSArray *locations = [self getLocations:dbLocations];
     NSNumber *battery = [[NSNumber alloc]initWithFloat:[[UIDevice currentDevice] batteryLevel]];
     NSString *rId = ([riderId length] == 0 ) ? @"TcH4FR09ROSA4b42WJX6i+SFbTpuzcr06gszd9lHA4c=" : riderId;//this is temporary until its integrated with sencha
-    //NSString *rId = @"";
     
     NSMutableDictionary *json = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                  rId, @"rider_id", //rider's id //hard coded for now
                                  locations, @"locations",//locations array full of locations
                                  battery, @"battery",//current battery level
-                                 //tourConfigId, @"tour_id",
+                                 tourConfigId, @"tour_id",//current tour_id
                                  nil];
     
     NSError *writeError = nil;
@@ -217,7 +217,7 @@ static NSString *SERVER_LOCATION_UPDATE_URL = @"/location_update/";
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                          options:NSJSONReadingMutableContainers
                                                            error:&error];
-    //NSLog(@"The Server Returned in request Returned Data: %@", json);
+    NSLog(@"The Server Returned in request Returned Data: %@", json);
 }
 
 
