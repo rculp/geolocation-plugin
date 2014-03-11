@@ -189,7 +189,6 @@
 
 -(void) resumeTracking:(CDVInvokedUrlCommand *)command{[self.locTracking resumeTracking];}
 
--(void) selResumeTracking{[self.locTracking resumeTracking];}
 
 -(void) pauseTracking:(CDVInvokedUrlCommand *)command{[self.locTracking pauseTracking];}
 
@@ -250,10 +249,11 @@
 -(void)scheduleLocPolling{
     
     NSLog(@"Scheduling Location Polling with Rate of %f", self.locPollRate);
+    
     //Set Timer
     locPollRateTimer = [NSTimer scheduledTimerWithTimeInterval:self.locPollRate
-                                                        target:self
-                                                      selector:@selector(selResumeTracking)
+                                                        target:self.locTracking
+                                                      selector:@selector(resumeTracking)
                                                       userInfo:self
                                                        repeats:YES];
     
@@ -321,8 +321,8 @@
         NSLog(@"Updating Location Polling Rate");
         //Set Timer
         locPollRateTimer = [NSTimer scheduledTimerWithTimeInterval:self.locPollRate
-                                                            target:self
-                                                          selector:@selector(selResumeTracking)
+                                                            target:self.locTracking
+                                                          selector:@selector(resumeTracking)
                                                           userInfo:self
                                                            repeats:YES];
         
