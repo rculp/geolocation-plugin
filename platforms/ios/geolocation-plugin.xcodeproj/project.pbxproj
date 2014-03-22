@@ -38,7 +38,6 @@
 		85124294183410AB008F9061 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85124293183410AB008F9061 /* CoreData.framework */; };
 		8564F63E18355F0F000FC590 /* CDVInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 8564F63D18355F0F000FC590 /* CDVInterface.m */; };
 		859D813F1851861700018D2D /* ServiceConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 859D813E1851861700018D2D /* ServiceConnector.m */; };
-		859D81431851863900018D2D /* PushAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 859D81421851863900018D2D /* PushAlgorithm.m */; };
 		8F5F84061A3747D2B5491555 /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DED3C7443974398B037FB94 /* AppDelegate+notification.m */; };
 		B82E4D8E13EB473CBCD28098 /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F1133A455574402954FC7F1 /* PushPlugin.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
@@ -170,8 +169,6 @@
 		8564F63D18355F0F000FC590 /* CDVInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVInterface.m; sourceTree = "<group>"; };
 		859D813D1851861700018D2D /* ServiceConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceConnector.h; sourceTree = "<group>"; };
 		859D813E1851861700018D2D /* ServiceConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceConnector.m; sourceTree = "<group>"; };
-		859D81411851863900018D2D /* PushAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushAlgorithm.h; sourceTree = "<group>"; };
-		859D81421851863900018D2D /* PushAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushAlgorithm.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* geolocation-plugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "geolocation-plugin-Info.plist"; path = "../geolocation-plugin-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		9AD22C98E6C14211B2647F26 /* CDVReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVReachability.h; path = "org.apache.cordova.network-information/CDVReachability.h"; sourceTree = "<group>"; };
 		C7C123DC25F84158BD95A65A /* PushPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushPlugin.h; path = com.phonegap.plugins.PushPlugin/PushPlugin.h; sourceTree = "<group>"; };
@@ -201,8 +198,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				859D81401851862800018D2D /* Algorithm */,
-				859D813B185185C300018D2D /* Post */,
 				8512428718340F2F008F9061 /* Controller */,
 				8512427F18340EB6008F9061 /* Model */,
 				8512428118340EDE008F9061 /* View */,
@@ -382,6 +377,7 @@
 		8512428718340F2F008F9061 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				859D813B185185C300018D2D /* Post */,
 				8512428F18340FBB008F9061 /* CoreLocation */,
 				8512428E18340FB2008F9061 /* CoreData */,
 				8564F63C18355F0F000FC590 /* CDVInterface.h */,
@@ -487,15 +483,6 @@
 				859D813E1851861700018D2D /* ServiceConnector.m */,
 			);
 			name = Post;
-			sourceTree = "<group>";
-		};
-		859D81401851862800018D2D /* Algorithm */ = {
-			isa = PBXGroup;
-			children = (
-				859D81411851863900018D2D /* PushAlgorithm.h */,
-				859D81421851863900018D2D /* PushAlgorithm.m */,
-			);
-			name = Algorithm;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -641,7 +628,6 @@
 				DCB823D2209445038D265FFC /* CDVReachability.m in Sources */,
 				8F5F84061A3747D2B5491555 /* AppDelegate+notification.m in Sources */,
 				B82E4D8E13EB473CBCD28098 /* PushPlugin.m in Sources */,
-				859D81431851863900018D2D /* PushAlgorithm.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
