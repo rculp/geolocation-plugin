@@ -212,6 +212,10 @@
     //Timer
     [self scheduleLocPolling];
     
+    //Restart the Server Polling
+    //Timer
+    [self scheduleServerPolling];
+    
 }
 
 
@@ -221,6 +225,13 @@
     //Kill The Location
     //Polling Timer
     [self killLocTimer];
+    
+    //kill the Server
+    //Polling Timer b/c
+    //we don't want to
+    //push to server w/
+    //no data
+    [self killServerTimer];
     
 }
 
@@ -337,14 +348,7 @@
         //if poll rate different, update the polling rate
         self.serverPollRate = nServerPollRate;
         
-        //If the timer was already
-        //initialized, need to
-        //cancel the last one
-        if(serverPollRateTimer != NULL){
-            [serverPollRateTimer invalidate];
-            serverPollRateTimer = nil;
-        }
-        
+        [self killServerTimer];
         
         
         //Set Timer
@@ -443,6 +447,16 @@
     if(locPollRateTimer != NULL){
         [locPollRateTimer invalidate];
         locPollRateTimer = nil;
+    }
+}
+
+-(void)killServerTimer{
+    //If the timer was already
+    //initialized, need to
+    //cancel the last one
+    if(serverPollRateTimer != NULL){
+        [serverPollRateTimer invalidate];
+        serverPollRateTimer = nil;
     }
 }
 
