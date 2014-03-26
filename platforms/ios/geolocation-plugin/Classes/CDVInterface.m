@@ -305,7 +305,7 @@
     [[NSRunLoop currentRunLoop] addTimer:locPollRateTimer forMode:NSRunLoopCommonModes];
 }
 
-#pragma mark - Time Tasks
+#pragma mark - Timer Tasks
 
 -(void)runStartTimeTask{
     //get the current location immediately
@@ -331,9 +331,13 @@
         [serverPollRateTimer invalidate];
         serverPollRateTimer = nil;
     }
+}
 
-    
-    
+-(void)postLocationUpdateRequestTask{
+    //get all the Locations we collected
+    [self.connector postLocations: [self getAllLocations]];
+    //clear out the internal storage
+    [self clearLocations];
 }
 
 
@@ -416,13 +420,6 @@
 -(NSArray*) getLocations:(NSUInteger)size{ return [self.dbHelper getLocations:(size)]; }
 
 -(void) clearLocations{ [self.dbHelper clearLocations]; }
-
--(void)postLocationUpdateRequestTask{
-    //get all the Locations we collected
-    [self.connector postLocations: [self getAllLocations]];
-    //clear out the internal storage
-    [self clearLocations];
-}
 
 
 
