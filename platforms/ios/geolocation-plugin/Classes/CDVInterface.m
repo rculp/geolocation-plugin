@@ -13,8 +13,8 @@
 
 @interface CDVInterface ()
 
-#define DEFAULT_SERVER_POLL_RATE 10//600
-#define DEFAULT_LOC_POLL_RATE 8//45
+#define DEFAULT_SERVER_POLL_RATE 15//600
+#define DEFAULT_LOC_POLL_RATE 8 //45
 #define DEFAULT_SERVER_POLL_RANGE 8
 
 @property (nonatomic) int locCount;
@@ -205,10 +205,24 @@
     
 }
 
--(void) resumeTracking:(CDVInvokedUrlCommand *)command{[self.locTracking resumeTracking];}
+-(void) resumeTracking:(CDVInvokedUrlCommand *)command{
+    [self.locTracking resumeTracking];
+    
+    //Restart the Location Pollling
+    //Timer
+    [self scheduleLocPolling];
+    
+}
 
 
--(void) pauseTracking:(CDVInvokedUrlCommand *)command{[self.locTracking pauseTracking];}
+-(void) pauseTracking:(CDVInvokedUrlCommand *)command{
+    [self.locTracking pauseTracking];
+    
+    //Kill The Location
+    //Polling Timer
+    [self killLocTimer];
+    
+}
 
 
 #pragma mark - Timer Schedulings
@@ -254,7 +268,7 @@
 -(void)scheduleServerPolling{
     
     //Set Timer
-    serverPollRateTimer = [NSTimer scheduledTimerWithTimeInterval:self.serverPollRate
+    serverPollRateTimer = [NSTimer scheduledTimerWithTimeInterval:self.finalServerPollRate
                                                      target:self
                                                    selector:@selector(postLocationUpdateRequestTask)
                                                    userInfo:self
@@ -279,6 +293,8 @@
     //in order for it to execute
     [[NSRunLoop currentRunLoop] addTimer:locPollRateTimer forMode:NSRunLoopCommonModes];
 }
+
+#pragma mark - Time Tasks
 
 -(void)runStartTimeTask{
     //get the current location immediately
@@ -309,14 +325,8 @@
     
 }
 
--(void)postLocationUpdateRequestTask{
-    //get all the Locations we collected
-    [self.connector postLocations: [self getAllLocations]];
-    //clear out the internal storage
-    [self clearLocations];
-}
 
-#pragma mark - Updating System States
+#pragma mark - Update Rates
 
 -(BOOL)updateServerPollRate:(int)nServerPollRate{
     
@@ -338,15 +348,7 @@
         
         
         //Set Timer
-        serverPollRateTimer = [NSTimer scheduledTimerWithTimeInterval:self.finalServerPollRate
-                                                               target:self
-                                                             selector:@selector(postLocationUpdateRequestTask)
-                                                             userInfo:self
-                                                              repeats:YES];
-        //Need to add poll Rate Timer to main loop
-        //in order for it to execute
-        [[NSRunLoop currentRunLoop] addTimer:serverPollRateTimer forMode:NSRunLoopCommonModes];
-        return TRUE;
+        [self scheduleServerPolling];
     }
     
     //Did not update poll rate
@@ -364,26 +366,19 @@
         //if loc poll rate different, update the rate
         self.locPollRate = nLocPollRate;
         
-        //If the timer was already
-        //initialized, need to
-        //cancel the last one
-        if(locPollRateTimer != NULL){
-            [locPollRateTimer invalidate];
-            locPollRateTimer = nil;
-        }
+        [self killLocTimer];
         
         NSLog(@"Updating Location Polling Rate");
-        //Set Timer
-        locPollRateTimer = [NSTimer scheduledTimerWithTimeInterval:self.locPollRate
-                                                            target:self.locTracking
-                                                          selector:@selector(resumeTracking)
-                                                          userInfo:self
-                                                           repeats:YES];
         
-        //Need to add poll Rate Timer to main loop
-        //in order for it to execute
-        [[NSRunLoop currentRunLoop] addTimer:locPollRateTimer forMode:NSRunLoopCommonModes];
-        
+        //If we are in a paused state
+        //then we do not want to
+        //init the location polling timer
+        //but if we are in a resume state
+        //then update the timer
+        if([self.locTracking isTracking]){
+            //Set Timer
+            [self scheduleLocPolling];
+        }
         return TRUE;
     }
     
@@ -408,6 +403,27 @@
     
 }
 
+#pragma mark - Sub Module Interface functions
+
+-(void) insertCurrLocation:(CLLocation *)location{ [self.dbHelper insertLocation:(location)]; }
+
+-(NSArray*) getAllLocations{ return [self.dbHelper getAllLocations]; }
+
+-(NSArray*) getLocations:(NSUInteger)size{ return [self.dbHelper getLocations:(size)]; }
+
+-(void) clearLocations{ [self.dbHelper clearLocations]; }
+
+-(void)postLocationUpdateRequestTask{
+    //get all the Locations we collected
+    [self.connector postLocations: [self getAllLocations]];
+    //clear out the internal storage
+    [self clearLocations];
+}
+
+
+
+#pragma mark - Utility Functions
+
 -(int)randomizeRange{
     int max = (int)self.serverPollRange;
     int min = (int)(self.serverPollRange *= -1);
@@ -420,16 +436,18 @@
     NSLog(@"Final Server Poll Rate: %f", self.finalServerPollRate);
 }
 
+-(void)killLocTimer{
+    //If the timer was already
+    //initialized, need to
+    //cancel the last one
+    if(locPollRateTimer != NULL){
+        [locPollRateTimer invalidate];
+        locPollRateTimer = nil;
+    }
+}
 
 
-#pragma mark - Sub Module Interface functions
 
--(void) insertCurrLocation:(CLLocation *)location{ [self.dbHelper insertLocation:(location)]; }
 
--(NSArray*) getAllLocations{ return [self.dbHelper getAllLocations]; }
-
--(NSArray*) getLocations:(NSUInteger)size{ return [self.dbHelper getLocations:(size)]; }
-
--(void) clearLocations{ [self.dbHelper clearLocations]; }
 
 @end
