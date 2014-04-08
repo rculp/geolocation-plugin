@@ -130,4 +130,12 @@
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
+- (void)applicationDidEnterBackground:(UIApplication *)application{
+    NSLog(@"Did Enter BG");
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application{
+    NSLog(@"Did Enter FG");
+}
+
 @end

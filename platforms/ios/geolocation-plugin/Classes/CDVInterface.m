@@ -24,14 +24,6 @@
 @property double finalServerPollRate;
 
 /**
- * Initialize
- * the sub-components
- * to the system. Called
- * by the start function
- **/
-- (void)initCDVInterface;
-
-/**
  * Set-up the Automatic start
  * and end time for the current
  * race.
@@ -115,32 +107,6 @@
  * server. Rate is in Milliseconds
  **/
 
-
-#pragma mark - Initialize
--(void)initCDVInterface{
-    
-    //set up db here
-    self.dbHelper = [[LocationDBOpenHelper alloc]init];
-    
-    //begins tracking on init
-    self.locTracking = [[BGLocationTracking alloc]initWithCDVInterface: self];
-    
-    //set up service connector
-    self.connector = [[ServiceConnector alloc]initWithParams   :DCSUrl
-                                                               :startTime
-                                                               :endTime
-                                                               :tourConfigId
-                                                               :riderId
-                                                               :self];
-    
-    //Set Current Device Battery Monitoring in order to get Battery percentage
-    [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
-    
-
-    
-    
-}
-
 -(void)setDefaultRates{
     self.serverPollRate = DEFAULT_SERVER_POLL_RATE;
     self.locPollRate = DEFAULT_LOC_POLL_RATE;
@@ -152,12 +118,7 @@
 
 #pragma mark - Sencha Interface Functions
 -(void) start:(CDVInvokedUrlCommand *)command{
-    
-    //First check if we are already initialized
-    if(self.dbHelper == nil && self.locTracking == nil && self.connector == nil){
-        [self initCDVInterface];
-    }
-    
+
     
     //Second get the args in the command
     CDVPluginResult* pluginResult = nil;
@@ -170,7 +131,9 @@
         endTime = [[command.arguments objectAtIndex:0]  objectForKey:@"endTime"];
         tourConfigId = [[command.arguments objectAtIndex:0]  objectForKey:@"tourId"];
         riderId = [[command.arguments objectAtIndex:0]  objectForKey:@"riderId"];
-
+        
+        //All must be present in order to
+        //be successful or can't POST
         if(DCSUrl != nil
            && startTime != nil
            && endTime != nil
@@ -179,7 +142,22 @@
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             javascript = [pluginResult toSuccessCallbackString:command.callbackId];
             
+            //set up db here
+            self.dbHelper = [[LocationDBOpenHelper alloc]init];
             
+            //begins tracking on init
+            self.locTracking = [[BGLocationTracking alloc]initWithCDVInterface: self];
+            
+            //set up service connector
+            self.connector = [[ServiceConnector alloc]initWithParams   :DCSUrl
+                                                                       :startTime
+                                                                       :endTime
+                                                                       :tourConfigId
+                                                                       :riderId
+                                                                       :self];
+            
+            //Set Current Device Battery Monitoring in order to get Battery percentage
+            [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
             
             //Set default values
             [self setDefaultRates];
@@ -347,7 +325,7 @@
     
     //check if the polling rate sent by server different
     //from the current poll rate
-    if(self.serverPollRate != nServerPollRate){
+    if(self.serverPollRate != nServerPollRate && (nServerPollRate != 0)){
         
         //if poll rate different, update the polling rate
         self.serverPollRate = nServerPollRate;
@@ -369,14 +347,12 @@
     
     //check if the polling rate sent by server different
     //from current location polling rate
-    if(self.locPollRate != nLocPollRate){
+    if(self.locPollRate != nLocPollRate && (nLocPollRate != 0)){
         
         //if loc poll rate different, update the rate
         self.locPollRate = nLocPollRate;
         
         [self killLocTimer];
-        
-        NSLog(@"Updating Location Polling Rate");
         
         //If we are in a paused state
         //then we do not want to
@@ -399,7 +375,7 @@
 -(BOOL)updateServerPollRange:(int)nServerPollRange{
     //check if the polling range sent by server different
     //from current location polling range
-    if(self.serverPollRange != nServerPollRange){
+    if(self.serverPollRange != nServerPollRange && (nServerPollRange != 0)){
         
         //if server poll range different, update the range
         self.serverPollRange = nServerPollRange;
