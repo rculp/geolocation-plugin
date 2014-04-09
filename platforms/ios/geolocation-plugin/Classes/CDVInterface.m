@@ -146,8 +146,8 @@
             
             
             //Add to Appdelegate
-            self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [self.appDelegate addCDVInterface:self];
+            //self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            //[self.appDelegate addCDVInterface:self];
             
             //Start Tracking immediately
             [self.locTracking resumeTracking];
