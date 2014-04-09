@@ -4,3 +4,5 @@
 .DS_Store
 build
 www/phonegap.js
+*.xcuserstate
+*/tags
