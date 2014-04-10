@@ -96,8 +96,8 @@
     //Race has started and not ended
     if([cordInterface isRaceStarted:currDateTime] &&
        ![cordInterface isRaceEnded:currDateTime]){
-        
-        NSLog(@"%@ has Started", [cordInterface getTypeofRace]);
+    
+        NSLog(@"We are in %@ Race", [cordInterface getTypeofRace]);
         
         //Check for null of initial Start/Date
         if(prevServDateTime != NULL){

@@ -71,7 +71,7 @@
     [self setFinalServerPollRate];
     
     //initialize Start/End states
-    isRaceStart = isRaceEnd = isBetaRaceStart = isBetaRaceEnd = isBetaRace = isActualRace = false;
+    isRaceStart = isRaceEnd = isBetaRaceStart = isBetaRaceEnd = isBetaRace = isActualRace = NO;
     
     //set-up Start/End states
     
@@ -298,6 +298,7 @@
 }
 
 //function assumes Beta Race Comes before Actual Race in Date/Time
+//this function updates the state of race
 -(void)updateRaceState :(NSDate *)currDateTime{
     //For Beta Race
     if([self compareDates :currDateTime :betaStartDateTime]){
